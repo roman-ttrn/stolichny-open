@@ -1,0 +1,84 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="orders-container">
+
+<a href='/' class='back-btn'>← К каталогу</a>
+
+  <h1>Активные заказы</h1>
+  
+  {% if orders %}
+    {% for order in orders %}
+      <div class="order-card">
+        <div class="order-header">
+          <span class="order-id">Заказ №{{ order.id }}</span>
+          <span class="order-status">{{ order.get_status_display }}</span>
+        </div>
+        <div class="order-meta">
+          <p><strong>Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+
+          {% if order.delivery_area %}
+            <p><strong>Район доставки:</strong> {{ order.delivery_area }}</p>
+            <p><strong>Адрес:</strong> {{ order.address }}</p>
+          {% endif %}
+          
+          {% if order.user.email %}
+            <p><strong>Эл. почта:</strong> {{ order.user.email }}</p>
+          {% endif %}
+
+          <p><strong>Телефон:</strong> +7{{ order.phone }}</p>
+
+          {% if request.user.email %}
+            <p><strong>Эл. почта:</strong> {{ request.user.email }}</p>
+          {% endif %}
+
+          {% if order.cash %}
+            <p><strong>Расчет: </strong>Наличные</p>
+          {% else %}
+            <p><strong>Расчет:</strong> Картой при получени</p>
+          {% endif %}
+          {% if order.promocode_applied %}
+            <p><strong>Скидка:</strong> {{ order.discount_percent }}%</p>
+          {% endif %}
+            <p><strong>Способ получения:</strong> {% if order.pickup %} Самовывоз {% else %} Доставка - {{ order.delivery_fee }} ₽ {% endif %}</p>
+
+        </div>
+        <div class="order-items">
+          <h4>Товары:</h4>
+          <ul class='goods'>
+            {% for item in order.items.all %}
+              <li>{{ item.product.name }} × <b>{{ item.quantity }} шт — {{ item.product.price }} ₽</b></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="order-total">
+          <span class="total-label">Итого:</span>
+          {% if order.promocode_applied %}
+            <span class="total-amount"><b>{{ order.discount_price }} ₽</b></span>
+
+          {% else %}
+            <span class="total-amount"><b>{{ order.price }} ₽</b></span>
+          {% endif %}
+        </div>
+        
+        {% if order.status == 'processing' or order.status == 'setting up' %}
+          <form method="post" action="{% url 'cancel_order' order.id %}" class="cancel-form">
+            {% csrf_token %}
+            <button type="submit" class="cancel-btn active">
+              Отменить заказ
+            </button>
+          </form>
+        {% else %}
+          <button class="cancel-btn inactive" title="Отменить заказ невозможно" disabled>
+            Отменить заказ
+          </button>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="empty-message">У Вас нет активных заказов...</p>
+    <br></br>
+  {% endif %}
+</div>
+{% endblock %}

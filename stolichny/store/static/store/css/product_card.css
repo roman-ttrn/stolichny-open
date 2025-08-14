@@ -1,0 +1,188 @@
+.product-wrapper-card {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 1px;
+  background: #ffffff;
+  border-radius: 32px;
+  transition: box-shadow 0.3s ease;
+}
+
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px 5px; /* Вертикальный = 40px, Горизонтальный = 32px (увеличено) */
+  padding: 2px;
+}
+
+.product-card {
+  background: #f4f4f4;
+  border-radius: 20px;
+  padding: 14px;
+  width: 200px;
+  min-height: 340px; /* Фиксированная минимальная высота */
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+.product-card h3,
+.product-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 10px 0 4px;
+  text-align: left;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #434343;
+  /* Фиксируем высоту под 2 строки */
+  min-height: 44px; /* 16px (font-size) * 1.3 (line-height) * 2 строки ≈ 44px */
+  word-wrap: break-word; /* Перенос слов при переполнении */
+  overflow-wrap: break-word; /* Альтернативное свойство для переноса */
+  white-space: normal; /* Разрешает перенос строк */
+  display: -webkit-box; /* Для ограничения количества строк */
+  -webkit-line-clamp: 2; /* Максимум 2 строки */
+  -webkit-box-orient: vertical; /* Вертикальное направление */
+  overflow: hidden; /* Скрывает текст, выходящий за пределы */
+  line-height: 1.3; /* Улучшает читаемость при переносе */
+}
+
+.product-weight {
+  font-size: 15px;
+  color: #999;
+  font-weight: 400;
+}
+
+.product-card p {
+  font-size: 19.2px;
+  color: #c7c7c7;
+  margin-bottom: 14.4px;
+}
+
+.product-card .price,
+.final-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 19.2px;
+}
+
+.old-price {
+  font-size: 15px;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.price-cart-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Прижимаем к низу карточки */
+}
+
+.product-card .action-wrapper {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 4px;
+}
+
+.product-card button,
+.action-wrapper button.add-to-cart {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: #f3f3f3;
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  width: 25px;
+  height: 25px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.product-card button:active {
+  transform: scale(0.98);
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #111;
+}
+
+.cart-controls button {
+  background: transparent;
+  border: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.cart-controls .increase {
+  color: #19bd04;
+}
+
+.cart-controls .decrease {
+  color: #c21212;
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    width: 40%; /* было 48% — теперь карточка уже */
+    padding: 5px; /* чуть меньше паддинг для компактности */
+    min-height: 280px; /* можно тоже чуть сократить, если нужно */
+  }
+
+  .product-card img {
+    height: 140px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .product-card h3,
+  .product-name {
+    font-size: 13.5px;
+    min-height: 36px;
+  }
+
+  .product-weight {
+    font-size: 12.5px;
+  }
+
+  .product-card p {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .product-card .price,
+  .final-price {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .cart-controls button {
+  width: 12px;
+  height: 12px;
+}
+}
+

@@ -1,0 +1,103 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+    <body>
+        <div class="categories-container">
+            <div class="categories-grid">
+
+                <a href="/" class="category-card" style="background-image: url('{% static "store/images/all-products.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Общий каталог</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/fruits/" class="category-card" style="background-image: url('{% static "store/images/fruits.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Фрукты, ягоды</h2>
+                    </div>
+                </a>
+
+                 <a href="/catalog/vegetables/" class="category-card" style="background-image: url('{% static "store/images/vegetables.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Овощи, грибы</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/meat/" class="category-card" style="background-image: url('{% static "store/images/meat.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Мясо, яйца, рыба</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/drinks/" class="category-card" style="background-image: url('{% static "store/images/drinks.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Напитки</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/bakery/" class="category-card" style="background-image: url('{% static "store/images/bakery.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Хлебобулочные изделия</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/snacks/" class="category-card" style="background-image: url('{% static "store/images/snacks.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Сладости и снеки</h2>
+                    </div>
+                </a>
+
+                 <a href="/catalog/dairy/" class="category-card" style="background-image: url('{% static "store/images/dairy.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Молочные продукты</h2>
+                    </div>
+                </a>
+
+                 <a href="/catalog/sauces/" class="category-card" style="background-image: url('{% static "store/images/sauces.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Соусы</h2>
+                    </div>
+                </a>
+
+
+                 <a href="/catalog/spices/" class="category-card" style="background-image: url('{% static "store/images/spices.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Специи</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/other/" class="category-card" style="background-image: url('{% static "store/images/home-hygiene.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Товары для дома и гигиена</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/other/" class="category-card" style="background-image: url('{% static "store/images/canned.jpg" %}');">
+                    <div class="overlay">
+                        <h2>Консервы, соленья</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/other/" class="category-card" style="background-image: url('{% static "store/images/sausages-cheese.png" %}');">
+                    <div class="overlay">
+                        <h2>Сыр, колбаса</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/other/" class="category-card" style="background-image: url('{% static "store/images/animals.png" %}');">
+                    <div class="overlay">
+                        <h2>Для животных</h2>
+                    </div>
+                </a>
+
+                <a href="/catalog/other/" class="category-card" style="background-image: url('{% static "store/images/cereals.png" %}');">
+                    <div class="overlay">
+                        <h2>Крупы</h2>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </body>
+{% endblock content %}

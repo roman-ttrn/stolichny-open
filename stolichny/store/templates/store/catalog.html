@@ -1,0 +1,139 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% load cart_extras %}
+
+{% block content %}
+      
+      <div class="story-section">
+        <!-- HTML: Блок Историй -->
+        <div class="story-bar">
+
+          <div class="story-card" data-caption="📞Телефон: +7 (914) 030 96 61.    📍Адрес: ПГТ. Сокол, ул. Гагарина, д. 14.     🕒 Время работы: Пн–Чт: 8:00–22:00, Птн–Вс: 9:00–23:00">
+            <img src="/static/store/images/shop.png" alt="Наш магазин">
+            <span>О магазине</span>
+          </div>
+
+          <div class="story-card" data-caption="Только что приехавшие продукты находятся в разделе 'Новинки'! 🤩" data-link="/catalog/new/">
+            <img src="/static/store/images/new_goods.png" alt="Новые продукты">
+            <span>Новинки</span>
+          </div>
+
+          <div class="story-card" data-caption="В разделе 'Покупают чаще всего' 🆕 собраны самые популярные товары." data-link="/catalog/buying_leaders/">
+            <img src="/static/store/images/pedestal-story.png" alt="Новинки">
+            <span>Покупают чаще всего</span>
+          </div>
+
+          <div class="story-card" data-caption="Дарим промокоды на скидки в честь запуска приложения! 🥳">
+            <img src="/static/store/images/action.png" alt="Акции">
+            <span>Акции</span>
+          </div>
+
+          <div class="story-card" data-caption="У Вас есть промокод? Вводите его в разделе 'Промокоды' и забирайте подарки! 😉">
+            <img src="/static/store/images/promo.png" alt="Промокоды">
+            <span>Промокоды</span>
+          </div>
+
+          <div class="story-card" data-caption="Наши курьеры — одни из самых быстрых людей на планете 💯. Вы можете проверить это прямо сейчас!">
+            <img src="/static/store/images/delivery-story.png" alt="Доставка">
+            <span>Наши курьеры</span>
+          </div>
+          </div>
+      </div>
+
+
+
+
+      <div class="product-wrapper-card">
+        <div class="category-header">
+          <h2>{{ category_name }}</h2>
+          <div class="subcategory-buttons">
+            <button class="subcategory-btn active" data-slug="{{ category_slug }}">Все</button>
+            {% for slug, name in sub.items %}
+              <button class="subcategory-btn" data-slug="{{ slug }}">{{ name }}</button>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+          {% include "store/includes/product_cards.html" %}
+        </div>
+
+      </div>
+
+
+
+
+        <div id="weightModal" class="modal" style="display:none">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3 id="modal-product-name">Выберите вес</h3>
+                <p></b><span id="modal-price" hidden='true'><b></span></p>
+                <label for="modal-weight" style="margin-bottom: 0.5rem;"><b>Сколько кг Вам нужно?<b></label>
+                <div class="weight-display-wrapper">
+                  <span id="weight-display" contenteditable="true">1.000</span> кг
+                </div>
+                <p>Итоговая цена: <span id="modal-total"></span> ₽</p>
+                <button id="confirm-weight">Добавить в корзину</button>
+            </div>
+        </div>
+
+      <div id="instaStoryModal" class="insta-modal hidden">
+
+        <div class="insta-modal-content">
+          <a id='insta-modal-btn' class='insta-modal-btn' href=''>К разделу→<a>
+          <div class="insta-saved-reaction" id="saved-reaction"></div>
+
+          <span class="insta-close">&times;</span>
+          <img id="insta-story-bg" src="/static/store/images/stats.png" alt="Story" />
+
+          <!-- "Наклейки"-тексты -->
+          <!-- Одна надпись внизу -->
+          <div class="insta-caption insta-single-caption"></div>
+
+          <!-- Ответ + реакции -->
+        <form method="POST" action="{% url 'user_story_response' %}" class="insta-reply-box">
+          {% csrf_token %} <!-- Обязательно для POST-запросов в Django -->
+          <input type="text" placeholder="Ответить нам..." id="insta-reply-input" name="content" required />
+          <button type="submit">➤</button>
+        </form>
+          <!-- Реакции -->
+          <div class="insta-reactions hidden" id="emoji-reactions">
+            <span class="emoji">🤩</span>
+            <span class="emoji">🧡</span>
+            <span class="emoji">😎</span>
+            <span class="emoji">😁</span>
+          </div>
+
+          <!-- Выбранный смайлик (анимация) -->
+          <div class="emoji-flash" id="emoji-flash"></div>
+
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Весь ваш текущий интерфейс заказа -->
+  </div>
+
+
+</body>
+
+    </body>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  let hasNextPage = {{ has_next|yesno:"true,false" }};
+  let page = {{ products.number }};
+</script>
+
+<script src="{% static 'store/js/catalog.js' %}"></script>
+
+
+
+{% endblock %}
+
+

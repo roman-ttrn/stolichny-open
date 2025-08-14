@@ -1,0 +1,77 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% load cart_extras %}
+
+{% block content %}
+    <div class="cart-container">
+        <a href='{{ previous_page|default:'/' }}' class='back-btn'>← Назад<a>
+        <h2>Корзина</h2>
+        
+        {% if user_promos %}
+            <div class="active-promos">
+                <h4>Активные акции:</h4>
+                <ul>
+                    {% for promo in user_promos %}
+                        <li class="promo-item">
+                            {{ promo.description|default:"Без описания" }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if cart_items %}
+            <div class="cart-items">
+                {% for item in cart_items %}
+                    <div class="cart-item" data-id="{{ item.id }}">
+                        <a href="{% url "product_page" item.id %}"><img src="{{ item.image.url }}" alt="{{ item.name }}"></a>
+                        <div class="item-info">
+                            <h3>{{ item.name }}</h3>
+                            <div class="cart-controls">
+                                <button class="decrease" data-id="{{ item.id }}">−</button>
+                                <span class="quantity">
+                                    {% with cart|get_item:item.id as quantity %}
+                                        {{ quantity }}
+                                    {% endwith %}
+                                </span>
+                                <button class="increase" data-id="{{ item.id }}">+</button>
+                            </div>
+                            <div class="price"><b>{{ item.price }} ₽</b></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="cart-summary">
+                <div id='gen-price' class="price-wrapper">
+                    {% if discount_price %}
+                        <div class="discounted">
+                            <span class="old-price">{{ total_price }} ₽</span>
+                            <span class="new-price">{{ discount_price }} ₽</span>
+                            <span class="discount-badge">−{{ discount_percent }}%</span>
+                        </div>
+                    {% else %}
+                        <h3>К оплате: <b>{{ total_price }} ₽</b></h3>
+                    {% endif %}
+                </div>
+
+                <a href={% url "order_placing" %} class="checkout-link">
+                    <button class="checkout-btn">
+                        <img src="{% static 'store/images/cart2.png' %}" alt="Иконка" class="btn-icon">
+                            Оформить заказ
+                    </button>
+                </a>
+            </div>
+        {% else %}
+            <p class="empty-cart">Корзина пуста</p>
+        {% endif %}
+    </div>
+{% endblock %}
+ 
+
+{% block scripts %}
+    <script src="{% static 'store/js/cart.js' %}" defer></script>
+
+{% endblock %}
+
+
+</script>

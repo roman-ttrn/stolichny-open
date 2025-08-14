@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Stolichny{% endblock %}</title>
+
+  <!-- Базовые шрифты и стили потом можно добавить -->
+</head>
+<body>
+<header>
+  <!-- Кнопка‑гамбургер (мобилки) -->
+  <button class="menu-toggle" aria-label="Открыть меню">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Логотип + категории (десктоп, спрячем на мобилках) -->
+  <div class="navbar-left">
+    <a href="/"><img src="{% static 'store/images/logo.png' %}" class="logo"></a>
+    <a href="/categories/" class="category-button">
+      <img src="{% static 'store/images/category.png' %}" alt="Категории">
+      <span>Категории</span>
+    </a>
+  </div>
+
+  <!-- Поиск (везде) -->
+  <div class="search-container">
+    <img src="{% static 'store/images/search.png' %}" class="search-icon" alt="Поиск">
+    <input type="text" class="search-input" placeholder="Найти товар..." maxlength=100>
+    <ul id="product-suggestions" class="suggestions-list"></ul>
+  </div>
+
+  <!-- Корзина + профиль/войти (десктоп, спрячем на мобилках) -->
+  <div class="navbar-right">
+    {% if request.user.is_authenticated %}
+
+      {% if request.user.profile.active_deliveries %}
+        <a href="/checkout/" class="nav-button">
+          <img src="{% static 'store/images/delivery.png' %}" alt="Доставка"><span>Заказы</span>
+        </a>
+      {% else %}
+        <a href="/checkout/" class="nav-button">
+          <img src="{% static 'store/images/delivery2.png' %}" alt="Доставка"><span>Заказы</span>
+        </a>
+      {% endif %}
+
+    {% endif %}
+    <a href="/cart/" class="nav-button">
+      <img src="{% static 'store/images/cart.png' %}" alt="Корзина"><span id="cart-count">{{ cart_item_count|default:"0" }}</span>
+    </a>
+    {% if request.user.is_authenticated %}
+      <a href="/user/profile/" class="profile-button">
+        <img src="{% static 'store/images/profile.png' %}" alt="Профиль"><span>Профиль</span>
+      </a>
+    {% else %}
+      <a href="/user/login/email" class="nav-button">→ Войти</a>
+    {% endif %}
+  </div>
+</header>
+
+<!-- off‑canvas панель -->
+<nav class="sidebar" aria-hidden="true">
+  <div class="sidebar-content">
+    <div class="button-list">
+      {% if request.user.is_authenticated %}
+        <a href="/user/profile/" class="profile-button">
+          <img src="{% static 'store/images/profile.png' %}" alt="Профиль"><span>Профиль</span>
+        </a>
+      {% else %}
+        <a href="/user/login/email" class="nav-button">→ Войти</a>
+      {% endif %}
+        {% if request.user.is_authenticated %}
+        
+        
+          {% if request.user.profile.active_deliveries %}
+            <a href="/checkout/" class="nav-button">
+              <img src="{% static 'store/images/delivery.png' %}" alt="Доставка"><span>Заказы</span>
+            </a>
+          {% else %}
+            <a href="/checkout/" class="nav-button">
+              <img src="{% static 'store/images/delivery2.png' %}" alt="Доставка"><span>Заказы</span>
+            </a>
+          {% endif %}
+        <a href="/categories/" class="nav-button">
+          <img src="{% static 'store/images/category.png' %}" alt="Категории"><span>Категории</span>
+        </a>
+
+          <a href="/promo/" class="nav-button">
+            <img src="{% static 'store/images/promocode.png' %}" alt="Промокоды"><span>Промокоды</span>
+          </a>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+          <a href="/support/" class="nav-button">
+            <img src="{% static 'store/images/support.png' %}" alt="Категории"><span>Tex. поддержка</span>
+          </a>
+        {% endif %}
+    </div>
+
+      <div class='messanger-container'>
+        <a href="https://t.me/+L_nE2YvEMmUxMWZi" class="messanger-button">
+          <img src="{% static 'store/images/telegram.png' %}" alt="Телеграм">
+        </a>
+
+        <a href="https://chat.whatsapp.com/E9sYMMEhEkEGbFyj0FcNCC" class="messanger-button">
+          <img src="{% static 'store/images/whatsapp.png' %}" alt="WhatsApp">
+        </a>
+      </div>
+
+  </div>
+</nav>
+
+
+  {% block content %}{% endblock %}
+
+<script src="{% static 'store/js/navbar.js' %}"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

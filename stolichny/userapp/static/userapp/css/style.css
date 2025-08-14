@@ -1,0 +1,106 @@
+.notification-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 350px;
+    width: 100%;
+}
+
+.notification {
+    position: relative;
+    padding: 18px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    transform: translateX(120%);
+    animation: slideIn 0.4s forwards, fadeOut 0.4s 4s forwards;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.notification::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.notification-icon {
+    margin-right: 15px;
+    font-size: 24px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.notification-message {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.notification-close {
+    margin-left: 15px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    font-size: 18px;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+/* Цветовые схемы */
+.notification-success {
+    background: linear-gradient(135deg, #3aad3e, #66BB6A);
+}
+
+.notification-error {
+    background: linear-gradient(135deg, #f4382a, #EF5350);
+}
+
+.notification-warning {
+    background: linear-gradient(135deg, #FF9800, hsl(36, 93%, 59%));
+}
+
+.notification-info {
+    background: linear-gradient(135deg, #f37521, #df7f3f);
+}
+
+/* Анимации */
+@keyframes slideIn {
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+}
+
+/* Эффект при наведении */
+.notification:hover {
+    transform: translateX(0) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}

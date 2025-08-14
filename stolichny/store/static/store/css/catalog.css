@@ -1,0 +1,396 @@
+body{
+  background-color: #f4f4f4 !important;
+}
+
+.story-bar {
+  display: flex;
+  gap: 13px;
+  padding: 24px 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.story-card {
+  position: relative;
+  width: 140px;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-right: 25px;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.story-card img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  z-index: 1;
+}
+
+.story-card span {
+  position: relative;
+  z-index: 2;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  font-size: 15px;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .story-bar {
+    justify-content: center;
+    flex-wrap: nowrap;         /* Отключаем перенос */
+    overflow-x: auto;          /* Горизонтальная прокрутка при переполнении */
+    padding: 16px 20px;        /* Уменьшим паддинги, чтобы было больше места */
+    gap: 40px;                 /* Меньший промежуток */
+  }
+
+  .story-card {
+    flex: 0 0 auto;            /* Жёсткий фиксированный flex-блок */
+    width: 120px;              /* Уже, чтобы влезало больше */
+    height: 180px;             /* Пропорционально уменьшено */
+    margin-right: 0;           /* Заменяем на gap, margin больше не нужен */
+    padding-bottom: 8px;       /* Лёгкая корректировка */
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .story-bar {
+    justify-content: flex-start;
+    flex-wrap: nowrap; 
+  }
+}
+
+/* ≤ 480px: смартфоны */
+@media (max-width: 850px) {
+  .story-bar {
+    justify-content: flex-start;
+    flex-wrap: nowrap;         /* Отключаем перенос */
+    overflow-x: auto;          /* Горизонтальная прокрутка при переполнении */
+    padding: 12px 10px;        /* Ещё меньше пустот по краям */
+    gap: 15px;                  /* Сократим промежутки до минимума */
+  }
+
+  .story-card {
+    width: 90px;               /* Узкий мини‑карточки */
+    height: 140px;             /* Пропорционально */
+    padding-bottom: 6px;
+  }
+
+  .story-card span {
+    font-size: 13px;           /* Мельче текст */
+  }
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 35px 20px 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.category-header h2 {
+  font-size: 40px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #e68021, #ff8a14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  flex: 1;
+  min-width: 300px; /* Чтобы название не сжималось слишком сильно */
+}
+
+.subcategory-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.subcategory-btn {
+  padding: 10px 24px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.subcategory-btn:hover {
+  background: #e0e0e0;
+}
+
+.subcategory-btn.active {
+  background: #e68021;
+  color: white;
+}
+
+@media (max-width: 750px) {
+  .category-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .subcategory-buttons {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  
+  .category-header h2 {
+    min-width: 100%;
+  }
+}
+
+.insta-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.insta-modal.hidden {
+  display: none;
+}
+
+.insta-modal-content {
+  position: relative;
+  width: 360px;
+  height: 640px;
+  border-radius: 30px;
+  overflow: hidden;
+  background: black;
+  box-shadow: 0 15px 60px rgba(0, 0, 0, 0.6);
+}
+
+.insta-modal-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.insta-caption {
+  position: absolute;
+  color: white;
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  backdrop-filter: blur(2px);
+}
+
+.insta-modal-btn{
+  position: absolute;
+  top: 65%;
+  left: 31%;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+
+  display: inline-block;
+  padding: 0.3rem 1rem; /* было 0.5rem 1.5rem */
+  font-size: 15px;
+    background-image: linear-gradient(
+    to right,
+    rgba(246, 145, 29, 0.8),  /* #f6911d с прозрачностью 70% */
+    rgba(212, 119, 19, 0.8)   /* #d47713 с прозрачностью 70% */
+  );
+  border: none;
+  border-radius: 20px; /* закругление краёв */
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.insta-modal-btn.hidden { display: none; }
+
+.insta-reply-box {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  display: flex;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+.insta-reply-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  background: transparent;
+  color: #333;
+}
+
+.insta-reply-box button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #444;
+}
+
+.insta-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+
+.insta-single-caption {
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.insta-caption {
+  position: absolute;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 14px;
+  border-radius: 18px;
+  font-weight: 500;
+
+  backdrop-filter: blur(2px);
+}
+
+.insta-reactions {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 14px;
+  border-radius: 25px;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+  z-index: 20;
+}
+
+.insta-reactions.hidden {
+  display: none;
+}
+
+.insta-reactions .emoji {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.insta-reactions .emoji:hover {
+  transform: scale(1.2);
+}
+
+/* Эффект вспышки эмодзи */
+.emoji-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 3rem;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 30;
+  outline: none !important;       /* Убирает стандартный outline */
+  -webkit-tap-highlight-color: transparent;  /* Убирает подсветку на тач-устройствах */
+}
+
+
+
+.emoji-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 3rem;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.emoji-flash:focus-visible {
+  outline: none !important;
+}
+
+.emoji-flash.enter {
+  animation: emojiEnter 0.5s ease-out forwards;
+}
+
+.emoji-flash.exit {
+  animation: emojiExit 0.4s ease-in forwards;
+}
+
+@keyframes emojiEnter {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  70% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes emojiExit {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+}
+
+
+.insta-saved-reaction {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 1.7rem;
+  z-index: 20;
+}

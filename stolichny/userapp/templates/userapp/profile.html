@@ -1,0 +1,55 @@
+{% extends "userapp/base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div class="content">
+      <a href="{% url 'profile_edit' %}" class="edit-link">
+        <div class="profile-card">
+          <div class="avatar">
+            <img src="{% static 'userapp/images/profile.png' %}" alt="Profile Picture">
+          </div>
+            <div class="user-info">
+              <h2>{{request.user.first_name}}</h2>
+              <p class="phone">+7{{request.user.profile.phone_number}}</p>
+              <p class="email">{{request.user.email}}</p>
+              {% if request.user.profile.address %}
+              {% endif %}
+            </div>
+          </div>
+      <a>
+        <div class="button-group">
+          <a href="{% url 'catalog' %}" class="edit-link">
+            <button class="action-button">
+                <img src="{% static 'userapp/images/catalog.png' %}" alt="Edit" class="button-icon">
+                <span>К каталогу</span>
+            </button>
+          </a>
+          <div class='desktop-only'>
+            <a href="{% url 'promo' %}" class="edit-link">
+              <button class="action-button">
+                  <img src="{% static 'userapp/images/promobtn.png' %}" alt="Edit" class="button-icon">
+                  <span>Промокоды</span>
+              </button>
+            </a>
+          </div>
+          <div class='desktop-only'>
+            <a href="{% url 'support' %}" class="edit-link">
+              <button class="action-button">
+                  <img src="{% static 'userapp/images/support-desktop.png' %}" alt="Edit" class="button-icon">
+                  <span>Тех. поддержка</span>
+              </button>
+            </a>
+          </div>
+            <form method="post" class="logout-form" action="{% url 'logout_user' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout">
+                    <img src="{% static 'userapp/images/logout.png' %}" alt="Logout" class="button-icon">
+                    <span>Выйти</span>
+                </button>
+            </form>
+        </div>
+
+    </div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,125 @@
+  .promo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh;
+    padding: 40px 20px;
+    background: #fff;
+  }
+
+  .promo-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+
+  .promo-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .promo-input {
+    width: 80%;
+    padding: 18px 24px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  .promo-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(to right, #f6911d, #d47713);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .info-box {
+    margin-top: 32px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 14px;
+    font-size: 15px;
+    color: #444;
+    box-shadow: inset 0 0 0 1px #eee;
+  }
+
+  .info-box span {
+    font-weight: 600;
+    color: #f6911d;
+  }
+
+  .social-links {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #555;
+    transition: color 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .social-links a:hover {
+    color: #d47713;
+  }
+
+  .social-links svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    fill: currentColor;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #f6911d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .back-link:hover {
+    color: #d47713;
+  }
+
+  @media (max-width: 480px) {
+    .promo-card {
+      padding: 28px 20px;
+    }
+
+    .promo-title {
+      font-size: 24px;
+    }
+
+    .promo-input {
+      font-size: 15px;
+      padding: 14px 20px;
+    }
+
+    .promo-button {
+      padding: 14px;
+      font-size: 15px;
+    }
+  }

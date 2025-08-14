@@ -1,0 +1,66 @@
+{% for order in orders %}
+  <div class="order-card" data-status="{{ order.status }}">
+    <h3>Заказ №{{ order.id }} от {{ order.created_at|date:"d.m.Y H:i" }}</h3>
+    <p>
+      <b>Клиент: </b>{{ order.user.first_name }} | 
+      {% if order.address %}<b>Адрес: </b>{{order.address}} | {% endif %}
+      <b>Расчет:</b> {% if order.cash %} Наличные {% else %} Картой при получении {% endif %}| 
+      <b>Статус:</b> <span class="status-{{ order.status|slugify }}">{{ order.get_status_display }}</span> | 
+      <b>Курьер:</b> {% if order.courier %} {{ order.courier.last_name }} {{ order.courier.first_name }} {% else %} Назначьте курьера!{% endif %}
+    </p>
+    
+    <div class="order-products">
+      <b>Товары:</b>
+      {% for product in order.items.all %}
+        <div class="product-item">{{ product }}</div>
+      {% endfor %}
+    </div>
+
+    <p>
+         {% if order.delivery_area %}
+            <p><strong>Район доставки:</strong> {{ order.delivery_area }}</p>
+          {% endif %}
+
+            {% if order.user.email %}
+            <p><strong>Эл. почта:</strong> {{ order.user.email }}</p>
+          {% endif %}
+        <p><b> Коментарий к заказу: </b>{% if order.comment %}{{order.comment}}{% else %}коментария нет.{% endif %}<p>
+    </p>
+
+    <p><b>Номер телефона:</b> +7{{ order.user.profile.phone_number }}</p>
+    <p><strong>Способ получения:</strong> {% if order.pickup %} Самовывоз {% else %} Доставка - {{ order.delivery_fee }} ₽ {% endif %}</p>
+
+    <p><b>К оплате:</b> {% if order.discount_price %} {{ order.discount_price }} ₽ {% else %} {{ order.price }} ₽ {% endif %} </p>
+
+    <form method="POST" action="{% url 'update_order_status' order.id %}">
+      {% csrf_token %}
+      <select name="status">
+        {% for status_value, status_label in order.STATUS_CHOICES %}
+          <option value="{{ status_value }}" {% if order.status == status_value %}selected{% endif %}>
+            {{ status_label }}
+          </option>
+        {% endfor %}
+      </select>
+      <select name="courier_id">
+        <option value="">— Без курьера —</option>
+        {% for courier in couriers %}
+          <option value="{{ courier.id }}" {% if order.courier and order.courier.id == courier.id %}selected{% endif %}>
+            {{ courier.first_name }} {{ courier.last_name }}
+          </option>
+        {% endfor %}
+      </select>
+
+        <div class="corrections-field">
+        <textarea 
+          name="corrections" 
+          placeholder="Внесите правки (до 500 символов)"
+          maxlength="500"
+          rows="2"
+          class="corrections-textarea"
+        >{% if order.corrections %}{{ order.corrections }}{% endif %}</textarea>
+      </div>
+
+      <button type="submit">Обновить</button>
+    </form>
+  </div>
+{% endfor %}

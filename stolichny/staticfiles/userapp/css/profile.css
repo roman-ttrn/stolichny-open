@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: #e7e7e7;
+    display: flex;
+    justify-content: center;
+    align-items: start; /* ПРИМЕЧАНИЕ: раньше было center => ставим start, чтобы контент был повыше */
+    height: 100vh;
+    padding-top: 50px; /* чтобы сверху был отступ */
+}
+
+.profile-card {
+    background-color: rgba(245, 245, 245, 0.85); /* Полупрозрачный фон */
+    backdrop-filter: blur(12px); /* Размытие подложки */
+    -webkit-backdrop-filter: blur(12px); /* Для Safari */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    padding: 40px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.user-info {
+    margin-top: 10px;
+    color: #333;
+}
+
+.user-info h2 {
+    margin: 5px 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-info p {
+    margin: 3px 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.phone {
+    color: #de7b1e;
+}
+
+.email {
+    color: #de7b1e;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* расстояние между карточкой и кнопками */
+}
+
+.button-group {
+    width: 350px; /* ширина такая же, как у карточки */
+    display: flex;
+    flex-direction: column; /* кнопки одна под одной */
+    gap: 10px; /* расстояние между кнопками */
+}
+
+.action-button {
+    background-image: linear-gradient(to right, #f6911d, #d47713);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0; /* увеличил вертикальные отступы для солидности */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%; /* кнопка занимает всю ширину родителя */
+    transition: background-color 0.3s ease;
+}
+
+
+.logout {
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0; /* увеличил вертикальные отступы для солидности */
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 60%; 
+    transition: background-color 0.3s ease;
+    align-self: center; /* Выравнивает кнопку по центру внутри .button-group */
+}
+
+.logout:hover {
+    background-color: #1c1c1c;
+}
+
+.logout-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.edit-link {
+    text-decoration: none;
+}
+
+/* Скрывает элементы на мобильных */
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}

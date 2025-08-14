@@ -1,0 +1,40 @@
+{% extends "userapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="email-confirm-wrapper">
+  <div class="email-confirm-box {% if messages %}shake{% endif %}" id="confirmBox">
+    <h2>Подтвердите вход</h2>
+    <p class="subtext">Введите код, отправленный на почту <b>{{ user_email }}</b></p>
+
+    <form method="POST" id="codeForm">
+      {% csrf_token %}
+      <div class="code-input-container" id="codeContainer">
+        {% for i in "123456" %}
+          <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="code-input" name="code{{ forloop.counter0 }}">
+        {% endfor %}
+      </div>
+
+      <input type="hidden" name="code" id="finalCode">
+      <button type="submit" class="confirm-button">Подтвердить</button>
+    </form>
+
+    <button id="resendButton" class="resend-button" disabled>Отправить код ещё раз (30)</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'userapp/js/email_verify.js' %}"></script>
+
+<script>
+  // Shake-анимация при ошибке
+  {% if messages %}
+  const box = document.getElementById('confirmBox');
+  box.classList.remove('shake');
+  void box.offsetWidth; // Триггер перерисовки
+  box.classList.add('shake');
+  {% endif %}
+</script>
+{% endblock %}

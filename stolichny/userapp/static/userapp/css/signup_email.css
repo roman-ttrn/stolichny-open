@@ -1,0 +1,204 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 60px;
+}
+
+/* Логотип */
+.registration-form::before {
+    content: "";
+    display: block;
+    background: url("/static/userapp/images/logo.png") no-repeat center center;
+    background-size: contain;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+/* Контейнер формы */
+.registration-form {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    width: 360px;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+/* Заголовок */
+.registration-form h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Группа формы */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Метка */
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Инпуты */
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #cf7b1c;
+}
+
+/* Кнопка */
+.submit-button {
+    width: 100%;
+    padding: 12px 0;
+    background-image: linear-gradient(to right, #f6911d, #d47713);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #be7119;
+}
+
+/* Сноска */
+.note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.note a {
+    color: #cf7b1c;
+    font-weight: bold;
+}
+
+.note a:hover {
+    text-decoration: underline;
+}
+
+/* Сообщения */
+.message-container {
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.alert {
+    background-color: #ffd965;
+    color: #222;
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 5px;
+    position: relative;
+    transition: opacity 0.5s ease-out;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error, .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #444;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 30px; /* Меньше отступ сверху */
+        align-items: center; /* Центрируем форму по вертикали */
+    }
+
+    .registration-form {
+        width: 90%; /* Форма займет 90% ширины экрана */
+        max-width: 300px; /* Но не больше 300px (чтобы не растягивалась) */
+        padding: 25px 20px; /* Меньше внутренние отступы */
+        border-radius: 16px; /* Чуть меньше скругление */
+    }
+
+    .registration-form::before {
+        height: 50px; /* Логотип компактнее */
+        margin-bottom: 12px;
+    }
+
+    .registration-form h2 {
+        font-size: 20px; /* Заголовок меньше */
+        margin-bottom: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 14px; /* Меньше отступ между полями */
+    }
+
+    .form-group label {
+        font-size: 14px; /* Метки компактнее */
+    }
+
+    .form-group input {
+        padding: 8px 10px; /* Поля ввода меньше */
+        font-size: 14px;
+    }
+
+    .submit-button {
+        padding: 10px 0; /* Кнопка компактнее */
+        font-size: 15px;
+    }
+
+    .note {
+        font-size: 12px; /* Текст ссылки меньше */
+    }
+}
+
+/* Дополнительно: для очень маленьких экранов (iPhone SE) */
+@media (max-width: 375px) {
+    .registration-form {
+        max-width: 280px; /* Еще уже на самых маленьких экранах */
+        padding: 20px 15px; /* Еще меньше отступы */
+    }
+
+    .registration-form h2 {
+        font-size: 18px; /* Еще меньше заголовок */
+    }
+}
+

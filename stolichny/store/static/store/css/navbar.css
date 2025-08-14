@@ -1,0 +1,557 @@
+/* Основной контейнер */
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: rgba(255, 255, 255, 0.75); /* Полупрозрачный фон */
+  backdrop-filter: blur(12px); /* Размытие подложки */
+  -webkit-backdrop-filter: blur(12px); /* Для Safari */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Лёгкая граница для контраста */
+}
+
+/* Левая зона */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* Увеличен отступ между логотипом и кнопкой */
+}
+
+/* Центр — поиск */
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  width: 100%;
+}
+
+
+/* Правая зона */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Логотип */
+.logo {
+  width: 65px;
+  height: auto;
+}
+
+/* Кнопки */
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 140px; /* фиксированная ширина предотвращает сдвиг */
+  padding: 14px 22px;
+  background-color: rgba(247, 247, 247, 0.55);
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Кнопка Профиля — аватар */
+.profile-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.profile-button img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 4px;
+  border: 2px solid #ccc;
+  object-fit: cover;
+}
+
+/* Категория с иконкой */
+.category-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  background-color: rgba(247, 247, 247, 0.55);
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.category-button img {
+  width: 22px;
+  height: 22px;
+}
+
+.category-button:hover {
+  background-color: #f0f0f0;
+}
+
+
+.nav-button img {
+  margin-right: 10px; /* немного увеличено */
+  width: 27px;
+  height: 27px
+}
+
+#cart-count {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Поисковая строка — стала выше и выразительнее */
+.search-input {
+  width: 100%;
+  padding: 18px 24px 18px 50px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  background-color: rgba(247, 247, 247, 0.55);
+  box-shadow: #333;
+  font-size: 17px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #bbb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-input:focus + .search-icon {
+  opacity: 0.9;
+}
+
+/* Контейнер для поиска */
+.search-container {
+  position: relative;      /* якорь для абсолютного позиционирования */
+  overflow: visible;       /* подсказки выходят за рамки по вертикали, но не по горизонтали */
+  box-sizing: border-box;
+  min-width: 0;
+  width: auto; /* Изменяем с 100% на auto */
+  max-width: 600px; /* Фиксируем максимальную ширину */
+  margin: 0 20px; /* Добавляем отступы по бокам */
+  flex: 0 1 auto; /* Позволяет сжиматься при нехватке места */
+}
+
+/* Иконка лупы */
+.search-icon {
+  position: absolute;
+  left: 20px; /* Размещаем справа */
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  opacity: 0.6;
+  pointer-events: none; /* Чтобы не мешала кликам по полю */
+}
+
+.suggestions-list {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  right: 25%;
+  width: 90%;              /* нужная вам ширина подсказок */
+  margin: 0 auto;          /* центрирует блок между left:0 и right:0 */
+  transform-origin: top center;
+  transform: scaleY(0.8);  /* угол «сжатия» по вертикали */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.suggestions-list.active {
+  transform: scaleY(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+.suggestions-list li {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  padding: 16px 22px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.suggestions-list li:hover {
+  background: #f7f7f7;
+  transform: translateY(-2px);
+}
+
+.suggestions-list a {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+
+.mobile-search-wrapper {
+  width: 100%;
+  padding: 0 12px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  display: none; /* Показываем только на мобилках */
+}
+
+.suggestion-text {
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* === Мобильная адаптация ≤768px: иконки в одну строку под поиском, без круглых кнопок === */
+/* —————————————————— */
+/* Гамбургер‑кнопка */
+.menu-toggle {
+  display: none;
+  position: relative;
+  width: 30px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  margin: 5px 0;
+  background: #333;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Боковая панель */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  /* фон: полупрозрачный белый + немного серого для контраста */
+  background-color: rgba(255, 255, 255, 0.6);
+  /* размытие того, что за панелью */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 3px 0 12px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+
+  /* flex-контейнер по колонке */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;  /* отступ сверху для аватара */
+}
+
+/* Открытое состояние */
+.sidebar.open {
+  left: 0;
+}
+
+/* 2. Аватарка профиля */
+.sidebar .profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,0.1);
+  object-fit: cover;
+  margin-bottom: 24px;
+}
+
+/* 3. Контейнер с кнопками */
+.sidebar .button-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 21px;          /* расстояние между кнопками */
+  padding: 0 20px;    /* по бокам */
+  margin-top: 110px;   /* опускаем список вниз */
+  margin-bottom: 40px;/* отступ снизу */
+  margin-left: -16px;
+}
+
+
+/* Сами кнопки: чуть темнее фона */
+.sidebar .button-list .nav-button {
+  background-color: rgba(43, 42, 42, 0.05);
+  color: #333;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-align: left;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar .button-list .nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+/* Медиазапрос для мобилок */
+@media (max-width: 768px) {
+  /* Показываем гамбургер */
+  .menu-toggle {
+    display: block;
+    margin-right: 16px;
+    margin-bottom: 8px;
+  }
+  /* Шапка: только гамбургер, поиск и корзина */
+  .navbar-left,
+  .navbar-right > :not(.nav-button[href="/cart/"]) {
+    display: none !important;
+  }
+  
+  /* Оставляем корзину в navbar-right */
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  /* Уменьшаем поля у поиска, сдвигаем */
+  .search-container {
+    flex: 1;
+    margin: 0px 60px 0px 0px;
+    padding: 0 8px;
+    max-width: calc(100vw - 100px); /* если корзина и бургер съедают 100px */
+  }
+  .search-input {
+    padding: 8px 12px 8px 36px;
+    font-size: 14px;
+  }
+  .search-icon {
+    left: 18px;    /* чуть сдвинуть вправо для баланса */
+    width: 16px;
+    height: 16px;
+  }
+  .navbar-right .nav-button[href="/cart/"] {
+  padding: 8px 12px;    /* вертикально 8px, горизонтально 12px */ 
+  min-width: 44px; /* или 48px — ширина иконки + отступы */
+  flex-shrink: 0;  /* запрещаем сжиматься */   /* авто‑ширина вместо 140px */
+}
+}
+
+/* ==============================================================
+   ЛАНДШАФТ (для телефонов и планшетов в альбомном режиме)
+   ============================================================== */
+@media (orientation: landscape) {
+  header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap !important;
+    padding: 12px 24px;
+  }
+  .navbar-left {
+    display: flex !important;
+    gap: 24px;
+  }
+
+  /* Убираем сдвиг/сжатие поиска */
+  .navbar-center,
+  .search-container {
+    position: relative !important;
+    display: flex !important;
+    flex: 1 1 auto !important;
+    max-width: 600px;
+    margin: 0 20px;
+  }
+  .search-container {
+    width: 100%;
+  }
+
+  /* Вернём правую зону */
+  .navbar-right {
+    display: flex !important;
+    gap: 16px;
+  }
+  /* Убираем скрытия и особые правила */
+  .navbar-right > * {
+    display: flex !important;
+    min-width: auto !important;
+    padding: 12px 16px !important;
+  }
+  .navbar-right .nav-button[href="/cart/"] {
+    min-width: 140px;
+    padding: 14px 22px;
+    flex-shrink: 0;
+  }
+
+  /* Подгоняем иконки и текст */
+  .nav-button,
+  .category-button,
+  .profile-button {
+    font-size: 15px;
+  }
+  .profile-button img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .suggestions-list {
+    position: absolute;       /* уже есть в базовых стилях */
+    top: calc(100% + 7px);    /* тоже обычно берём из базовых */
+    
+    /* вот «магия» центрирования: */
+    left: 65% !important;
+    transform: translateX(-50%) scaleY(0.8) !important;
+    
+    /* и здесь же — новая меньшая ширина: */
+    width: 200% !important; 
+    
+    /* остальные свойства берутся из базовых: */
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: top center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .suggestions-list.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) scaleY(1) !important;
+  }
+
+  /* Подсказки (ли) тоже можно чуть уменьшить */
+  .suggestions-list li {
+    padding: 10px 16px !important;
+    font-size: 15px !important;
+  }
+
+  .suggestions-list a {
+    padding: 6px 12px;       /* сбросить до более компактных отступов */
+    font-size: 13px;         /* чуть мельче, чтобы влезало */
+    white-space: nowrap;     /* запрещает перенос слова на новую строку */
+    display: inline-block;   /* помогает правильно учитывать паддинги */
+  }
+}
+
+/* Планшеты в портретной ориентации: включаем поведение как на мобилках */
+@media screen and (max-width: 1024px){
+  .menu-toggle {
+    display: block;
+    margin-right: 16px;
+    margin-bottom: 8px;
+  }
+
+  .navbar-left,
+  .navbar-right > :not(.nav-button[href="/cart/"]) {
+    display: none !important;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .search-container {
+    flex: 1;
+    margin: 0px 60px 0px 0px;
+    padding: 0 8px;
+    max-width: calc(100vw - 100px); /* учёт бургер-меню + корзины */
+  }
+
+  .search-input {
+    padding: 8px 12px 8px 36px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    left: 18px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .navbar-right .nav-button[href="/cart/"] {
+    padding: 8px 12px;
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+}
+
+
+/* Контейнер для кнопок мессенджеров */
+.messanger-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 15px 30px;
+  margin-top: auto;
+  margin-bottom: 70px;
+}
+
+/* Стили для кнопок мессенджеров */
+.messanger-button {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.messanger-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

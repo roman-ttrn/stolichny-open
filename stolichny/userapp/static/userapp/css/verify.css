@@ -1,0 +1,127 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #f4f4f4; /* дублируем фон на случай, если wrapper не покрывает всю область */
+}
+
+.email-confirm-wrapper {
+  height: 100vh; /* вместо min-height */
+  margin: 0;
+  /* остальные стили остаются прежними */
+}
+
+.email-confirm-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: #f4f4f4; 
+  font-family: 'Inter', 'Manrope', 'Work Sans', sans-serif;
+  color: #ffffff;
+}
+
+.email-confirm-box {
+  background: #ffffff; /* светлый молочный */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  color: #1C1C1C;
+  backdrop-filter: blur(8px);
+}
+
+.email-confirm-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.subtext {
+  color: #333;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.code-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.code-input {
+  width: 45px;
+  height: 55px;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px solid #cf7b1c;
+  border-radius: 12px;
+  background-color: #FDFCFB;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.code-input:focus {
+  border-color: #ea7d00;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+  outline: none;
+}
+
+.confirm-button {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: #ffffff;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%   { transform: translateX(0px); }
+  25%  { transform: translateX(-5px); }
+  50%  { transform: translateX(5px); }
+  75%  { transform: translateX(-5px); }
+  100% { transform: translateX(0px); }
+}
+
+.resend-button {
+  margin-top: 15px;
+  background: none;
+  color: rgb(139, 68, 7);
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.resend-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+
+.button-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.action-button,
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* пространство между иконкой и текстом */
+}

@@ -1,0 +1,34 @@
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=20, unique=True, null=False, blank=False)
+    address = models.CharField(max_length=100, null=False, blank=True)
+    active_deliveries = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
+class EmailVerificationCode(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+    verified = models.BooleanField(default=False)
+
+    attempts = models.IntegerField(default=0)  # Попытки ввода кода
+    resend_attempts = models.IntegerField(default=0)  # Попытки отправки нового кода
+
+    is_blocked_until = models.DateTimeField(null=True, blank=True)  # Блокировка
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(minutes=10)
+
+    def is_blocked(self):
+        return self.is_blocked_until and self.is_blocked_until > timezone.now()
+
+    def block(self, duration=timedelta(minutes=10)):
+        self.is_blocked_until = timezone.now() + duration
+        self.save()

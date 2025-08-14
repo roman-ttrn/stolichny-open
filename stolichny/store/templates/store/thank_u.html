@@ -1,0 +1,27 @@
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'store/css/thank_u.css' %}">
+{% endblock %}
+
+{% block content %}
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<div class="thankyou-wrapper">
+  <div class="thankyou-card">
+
+    <img src="{% static 'store/images/thank_u.png' %}" alt="Спасибо" class="thankyou-img">
+
+    <h1 class="thankyou-title">Спасибо за заказ!</h1>
+    <p class="thankyou-text">
+      Мы уже начали сборку заказа. Курьер скоро выедет к Вам 🚚<br>
+      Следить за статусом можно в разделе <strong>“Активные заказы”</strong>.
+    </p>
+
+    <div class="thankyou-buttons">
+      <a href="{% url 'checkout' %}" class="btn-thankyou primary">Активные заказы</a>
+      <a href="{% url 'catalog' %}" class="btn-thankyou">На главную</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

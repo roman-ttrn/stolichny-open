@@ -1,0 +1,122 @@
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'store/css/order_placing.css' %}">
+{% endblock %}
+
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+
+<div class="checkout-container">
+
+  <div class="checkout-card">
+    <a href='/cart/' class='back-btn'>← К корзине<a>
+
+    <form method="POST" action="{% url 'order_sending' %}" id="profile-form">
+      {% csrf_token %}
+      
+
+      <!-- Личные данные -->
+      <div class="checkout-section">
+        <h2 class="section-title">Оформление заказа</h2>
+
+      <div class="form-group">
+
+        <input type="checkbox" id="pickup" name="pickup" class="pickup-input">
+        <label for="pickup">Заберу сам(а)</label>
+        <br></br>
+
+        <label for="delivery_area">В какой район доставляем?</label>
+        <select id="delivery_area" name="delivery_area" required>
+          <option value="">Выберите район</option>
+          {% for area, price in delivery_zones.items %}
+            <option value="{{ area }}">{{ area }} (+{{ price }} ₽)</option>
+          {% endfor %}
+        </select>
+      <br></br>
+      </div>
+
+        <label for="address">Подробности адреса (улица, дом и т.д.)</label>
+        <input type="text" id="address" name="address" placeholder="Улица, дом, квартира" required>
+
+
+        <label>Телефон</label>
+        <input type="text" value="+7{{ user.profile.phone_number }}" readonly class="readonly">
+
+        <label>Email</label>
+        <input type="email" value="{{ user.email }}" name="email">
+
+      </div>
+        <label for="comment">Коментарий к заказу</label>
+        <input type="text" id="comment" name="comment">
+
+      <!-- Список товаров -->
+      <div class="checkout-section">
+        <h2 class="section-title">Товары в заказе</h2>
+        <ul class="product-list">
+          {% for item in cart_items %} 
+            <li>{{ item.product.name }} - {{ item.product.price }} ₽ — <strong>{{ item.quantity }}</strong> шт.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Способ оплаты -->
+        <div class="checkout-section">
+        <h2 class="section-title">Как будете оплачивать?</h2>
+        <div class="payment-options">
+            <label class="payment-option">
+            <input type="radio" name="payment_method" value="cash" required>
+            <img src="{% static 'store/images/cash.png' %}" alt="Наличные">
+            <span>Наличными</span>
+            </label>
+
+            <label class="payment-option">
+            <input type="radio" name="payment_method" value="card">
+            <img src="{% static 'store/images/card.png' %}" alt="Карта">
+            <span>Картой при получении</span>
+            </label>
+          </div>
+          <br></br>
+
+              <div class="form-group">
+            <input type="checkbox" id="door_delivery" name="door_delivery" class="pickup-input">
+            <label for="door_delivery">Доставим до двери, но +50 ₽</label>
+              </div>
+        </div>
+
+      <!-- Предупреждение -->
+      <div class="warning-box">
+        <strong>Внимание!</strong> После того как курьер отправится с заказом, отмена станет невозможна. 
+        При повторяющихся неоплаченных заказах <b>Ваша учетная запись может быть временно ограничена.</b>
+      </div>
+      
+      <!-- Сумма заказа -->
+        <div class="total-box">
+          <p>Доставка: - ₽ </p>
+
+          <span class="total-label">Итого к оплате:</span>
+
+          <br></br>
+
+          {% if discount_price %}
+            <div class="price-wrapper">
+              <div class="discounted">
+                <span class="old-price">{{ total }} ₽</span>
+                <span class="new-price">{{ discount_price }} ₽</span>
+                <span class="discount-badge">−{{ discount_percent }}%</span>
+              </div>
+            </div>
+          {% else %}
+            <span class="total-price">{{ total }} ₽</span>
+          {% endif %}
+        </div>
+
+
+      <!-- Кнопка -->
+        <div class="submit-wrapper">
+             <button type="submit" class="btn-submit" id="submit-btn">Подтвердить заказ</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<script src="{% static 'store/js/order_placing.js' %}"></script>

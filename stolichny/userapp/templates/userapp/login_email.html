@@ -1,0 +1,24 @@
+{% extends "userapp/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="logo-container">
+            <img src="{% static 'userapp/images/logo.png' %}" alt="Логотип приложения" class="logo">
+        </div>
+        <h2>Вход через Email</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-footer">
+                <input type="email" name="email" placeholder="Введите вашу почту" required maxlength=50>
+                <p class="register-text">
+                    Нет аккаунта?
+                    <a href="{% url 'signup_email' %}" class="register-link">Зарегистрироваться</a>
+                </p>
+                <button type="submit" class="btn">Отправить код</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock content %}
+

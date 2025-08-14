@@ -1,0 +1,33 @@
+{% load cart_extras %}
+{% for product in products %}
+  <div class="product-card" data-id="{{ product.id }}" data-weight-dependence="{{ product.weight_dependence|yesno:'true,false' }}" data-price="{{ product.price }}">
+    <a href="{% url 'product_page' product.id %}">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+    </a>
+    <div class="product-info">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="product-weight">{{ product.weight }} г</div>
+      <div class="price-cart-line">
+        <div class="price-section">
+          {% if product.old_price %}
+            <span class="old-price">{{ product.old_price }} ₽</span>
+          {% endif %}
+          <span class="final-price">{{ product.price }} ₽</span>
+        </div>
+        {% with cart|get_item:product.id as quantity %}
+          <div class="action-wrapper">
+            {% if quantity %}
+              <div class="cart-controls">
+                <button class="decrease" data-id="{{ product.id }}">−</button>
+                <span class="quantity">{{ quantity }}</span>
+                <button class="increase" data-id="{{ product.id }}">+</button>
+              </div>
+            {% else %}
+              <button class="add-to-cart" data-id="{{ product.id }}">+</button>
+            {% endif %}
+          </div>
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

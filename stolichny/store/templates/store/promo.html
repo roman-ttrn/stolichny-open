@@ -1,0 +1,36 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div class="promo-container">
+  <div class="promo-card">
+    <h1 class="promo-title">Введите промокод</h1>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <input 
+        type="text" 
+        name="promocode" 
+        placeholder="Ваш промокод" 
+        required 
+        class="promo-input"
+      >
+      <button type="submit" class="promo-button">Активировать</button>
+    </form>
+
+    <div class="info-box">
+      Узнавайте <span>новые промокоды</span> на нашем сайте, в <span>Telegram</span> или <span>WhatsApp</span> группах.
+      <div class="social-links">
+        <a href="https://t.me/+L_nE2YvEMmUxMWZi" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M9.036 15.58l-.39 4.13c.557 0 .796-.24 1.096-.53l2.628-2.48 5.453 3.94c1.002.55 1.718.26 1.974-.93l3.58-16.62c.3-1.39-.51-1.94-1.47-1.61L2.203 9.62c-1.38.54-1.37 1.31-.25 1.66l4.68 1.46L19.512 5.97c.42-.27.82-.12.5.17"/></svg>
+          Telegram
+        </a>
+        <a href="https://chat.whatsapp.com/E9sYMMEhEkEGbFyj0FcNCC" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.47 14.37c-.25-.13-1.5-.75-1.73-.84s-.4-.12-.57.13-.66.84-.8 1.01-.3.19-.56.06a6.58 6.58 0 01-3.3-2.88c-.25-.44.26-.41.75-1.36.08-.17.04-.32-.02-.45s-.57-1.37-.79-1.88c-.2-.48-.4-.41-.57-.42l-.48-.01c-.17 0-.44.06-.67.3-.23.24-.9.88-.9 2.15s.92 2.5 1.05 2.67c.13.17 1.8 2.77 4.37 3.89.61.26 1.08.41 1.44.52.61.2 1.17.17 1.61.1.49-.07 1.5-.61 1.71-1.2.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <a href="/" class="back-link">← К каталогу</a>
+  </div>
+</div>
+{% endblock %}

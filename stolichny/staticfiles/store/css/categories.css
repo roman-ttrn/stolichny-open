@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.categories-container {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.categories-container h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #111;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+
+}
+
+.category-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    height: 220px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.category-card:hover .overlay {
+    background: rgba(0,0,0,0.6);
+}
+
+.overlay h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .overlay h2 {
+    transform: translateY(-5px);
+}

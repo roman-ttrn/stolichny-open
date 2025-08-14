@@ -1,0 +1,175 @@
+.orders-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.order-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.order-card:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-status {
+  background-color: #e38929;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+h4 {
+  color: #626262;
+}
+
+.order-meta p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.order-items {
+  margin: 15px 0;
+  color: #333;
+}
+
+.order-items ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.order-items li {
+  padding: 5px 0;
+  border-bottom: 1px dashed #f0f0f0;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #f5f5f5;
+  font-size: 1.1rem;
+}
+
+.total-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.total-amount {
+  font-weight: 700;
+  color: #e38929;
+  font-size: 1.2rem;
+}
+
+.empty-message {
+  text-align: center;
+  color: #a0a0a0;
+  margin-top: 40px;
+}
+
+.back-btn {
+  text-decoration: none;
+}
+
+/* Все предыдущие стили остаются такими же */
+/* Добавляем новые стили для кнопки отмены */
+
+.cancel-form {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.cancel-btn.active {
+  background-color: #f01313;
+  color: white;
+}
+
+.cancel-btn.active:hover {
+  background-color: #ff3333;
+  box-shadow: 0 2px 8px rgba(255, 77, 77, 0.3);
+}
+
+.cancel-btn.inactive {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.cancel-btn.inactive:hover::after {
+  content: "Отменить заказ невозможно";
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1;
+  margin-top: -35px;
+  margin-left: -10px;
+}
+
+.cancel-btn.inactive:hover {
+  position: relative;
+}
+
+a {
+  color: #e38929;
+}
+
+.empty-cart {
+    font-size: 20px;
+    text-align: center;
+    color: #888;
+    margin: 20px 0 10px; /* уменьшил отступ снизу */
+}
+
+.courier {
+    display: block;
+    width: 190px; /* или любой нужный вам размер */
+    height: auto;
+    margin: 0 auto 40px; /* центрирование и отступ снизу */
+}
+

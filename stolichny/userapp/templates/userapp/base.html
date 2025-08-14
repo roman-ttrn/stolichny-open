@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "userapp/css/signup.css" %}">
+    <link rel="stylesheet" href="{% static "userapp/css/profile.css" %}">
+    <link rel="stylesheet" href="{% static "userapp/css/signup_email.css" %}">
+    <link rel="stylesheet" href="{% static "userapp/css/login_email.css" %}">
+    <link rel="stylesheet" href="{% static "userapp/css/verify.css" %}">
+    <link rel="stylesheet" href="{% static "userapp/css/style.css" %}">
+     <link rel="stylesheet" href="{% static "userapp/css/profile_edit.css" %}">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="notification-container">
+            {% for message in messages %}
+            <div class="notification notification-{{ message.tags }}">
+                <span class="notification-icon">
+                    {% if message.tags == 'success' %}✓
+                    {% elif message.tags == 'error' %}✕
+                    {% elif message.tags == 'warning' %}⚠
+                    {% else %}i{% endif %}
+                </span>
+                <div class="notification-content">
+                    <div class="notification-title">
+                        {% if message.tags == 'success' %}
+                        {% elif message.tags == 'error' %}Ошибка
+                        {% elif message.tags == 'warning' %}
+                        {% else %}{% endif %}
+                    </div>
+                    <div class="notification-message">{{ message }}</div>
+                </div>
+                <span class="notification-close">×</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% block content %}{% endblock %}
+
+        {% block scripts %} {% endblock %}
+
+
+
+<script src="{% static 'userapp/js/base.js' %}"></script>
+
+</body>
+</html>

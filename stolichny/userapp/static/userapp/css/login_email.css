@@ -1,0 +1,209 @@
+/* main.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --primary: #cf7b1c;
+  --primary-dark: #be7119;
+  --bg-light: #F8F9FA;
+  --text-dark: #1A1A1A;
+  --text-light: #6C757D;
+  --border: #DEE2E6;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.alert {
+  background-color: white;
+  border-left: 4px solid var(--primary);
+  padding: 16px 40px 16px 20px;
+  margin-bottom: 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  min-width: 300px;
+  max-width: 100%;
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.alert.fade-out {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  font-size: 20px;
+  color: var(--text-light);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-dark);
+}
+
+.container {
+  background-color: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.logo {
+  max-width: 100px;
+  height: auto;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--text-dark);
+  width: 100%;
+}
+
+form {
+  width: 100%;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="email"]:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.15);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.btn {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #be7119;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column; /* Меняем на колонку */
+  width: 100%;
+  margin-top: 8px;
+}
+
+
+.btn {
+  width: 100%; /* Делаем кнопку на всю ширину */
+  /* Остальные стили кнопки без изменений */
+}
+
+.register-link-p{
+  text-align: flex-start;
+  width: 70%;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+  width: 80%;
+  padding: 20px;
+  }
+
+  .logo {
+  max-width: 80px;
+  }
+
+}
+ 
+
+.form-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Отступ между текстом и кнопкой */
+    margin-top: 24px;
+    text-align: center;
+}
+
+.register-text {
+    font-size: 15px;
+    color: var(--text-light);
+}
+
+.register-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary);
+    margin-left: 4px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+

@@ -1,0 +1,166 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div class="support-page">
+    <style>
+
+
+        .support-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        .support-container {
+            background: #fff;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 32px 24px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            color: rgb(217, 122, 28);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #d47713;
+        }
+
+        .back-link::before {
+            content: "←";
+            margin-right: 6px;
+            font-size: 16px;
+        }
+
+        .support-container h1 {
+            font-size: 24px;
+            color: rgb(217, 122, 28);
+            margin-bottom: 16px;
+        }
+
+        .support-container p {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 24px;
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        textarea:focus, input[type="email"]:focus {
+            border-color: rgb(255, 145, 0);
+            outline: none;
+        }
+
+        .send-btn {
+            margin-top: 20px;
+            width: 100%;
+            background-image: linear-gradient(to right, #f6911d, #d47713);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 14px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background-color: #be7119;
+        }
+
+        .char-counter {
+            font-size: 12px;
+            text-align: right;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .support-container {
+                padding: 24px 18px;
+            }
+
+            .support-container h1 {
+                font-size: 20px;
+            }
+
+
+        }
+
+    </style>
+
+    <div class="support-container">
+        <a href="/" class="back-link">К каталогу</a>
+        <h1>Техническая поддержка</h1>
+        <p>Если вы столкнулись с проблемой — пожалуйста, опишите её ниже. Мы постараемся решить её как можно быстрее.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="Ваш email" 
+                value="{{ request.user.email }}" 
+                maxlength=100
+                required
+            >
+            <br><br>
+            <textarea 
+                name="error_description" 
+                placeholder="Опишите ошибку" 
+                maxlength="259" 
+                oninput="updateCounter(this)" 
+                required
+            ></textarea>
+            <div class="char-counter" id="charCount">0 / 259</div>
+            <button type="submit" class='send-btn'>Отправить</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const textarea = document.querySelector('textarea');
+        const counter = document.getElementById('charCount');
+
+        if (textarea && counter) {
+            textarea.addEventListener("input", function () {
+                counter.textContent = textarea.value.length + ' / 259';
+            });
+
+            // Инициализация при загрузке
+            counter.textContent = textarea.value.length + ' / 259';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,115 @@
+.product-detail-container {
+  max-width: 1200px;
+  margin: 60px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  background-color: #fff;
+}
+
+.product-image img {
+  max-width: 450px;
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+
+  overflow-wrap: break-word;  /* Переносит длинные слова */
+  word-wrap: break-word;     /* Для старых браузеров */
+  word-break: break-word;    /* Разрешает разрыв слов */
+  white-space: normal;       /* Разрешает перенос строк */
+}
+
+.product-price {
+  font-size: 28px;
+  font-weight: 600;
+  color: #f6911d;
+  margin-bottom: 8px;
+}
+
+.product-weight {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 24px;
+}
+
+.product-description {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  color: #333;
+}
+
+.nutrition-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 32px;
+  font-size: 16px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #eee;
+}
+
+.nutrition-table th,
+.nutrition-table td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.nutrition-table th {
+  background-color: #f6f6f6;
+  font-weight: 600;
+}
+
+.action-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+button.btn-add,
+button.btn-increase,
+button.btn-decrease {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(to right, #f6911d, #d47713);
+  transition: all 0.3s ease;
+}
+
+button.btn-add:hover,
+button.btn-increase:hover,
+button.btn-decrease:hover {
+  transform: scale(1.05);
+}
+
+.detail-quantity {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 8px;
+  min-width: 24px;
+  text-align: center;
+}

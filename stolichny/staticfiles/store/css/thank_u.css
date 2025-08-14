@@ -1,0 +1,202 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f4f4 !important;
+}
+
+.thankyou-wrapper {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #fefefe 0%, #f1f1f1 100%);
+  padding: 40px 20px;
+}
+
+.thankyou-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.6s ease;
+}
+
+.thankyou-img {
+  width: 160px;
+  margin-bottom: 20px;
+  animation: popIn 0.4s ease-in-out;
+}
+
+.thankyou-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.thankyou-text {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.thankyou-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-thankyou {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #444;
+  background-color: #eeeeee;
+  border: 2px solid transparent;
+}
+
+.btn-thankyou.primary {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: #fff;
+}
+
+/* Animations */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* Медиа-запрос для планшетов (768px) */
+@media (max-width: 768px) {
+  .thankyou-wrapper {
+    min-height: 85vh;
+    padding: 30px 15px;
+  }
+  
+  .thankyou-card {
+    padding: 50px 30px;
+    border-radius: 20px;
+    max-width: 90%;
+  }
+  
+  .thankyou-img {
+    width: 180px;
+    margin-bottom: 25px;
+  }
+  
+  .thankyou-title {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .thankyou-text {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  
+  .thankyou-buttons {
+    gap: 20px;
+  }
+  
+  .btn-thankyou {
+    padding: 16px 32px;
+    font-size: 1.2rem;
+    border-radius: 14px;
+  }
+}
+
+/* Медиа-запрос для мобильных (480px) */
+@media (max-width: 480px) {
+  .thankyou-wrapper {
+    min-height: 90vh;
+    padding: 20px 10px;
+    background: #fff;
+  }
+  
+  .thankyou-card {
+    padding: 40px 20px;
+    border-radius: 16px;
+    max-width: 95%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .thankyou-img {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .thankyou-title {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .thankyou-text {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    padding: 0 10px;
+  }
+  
+  .thankyou-buttons {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .btn-thankyou {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px;
+    font-size: 1.1rem;
+  }
+  
+  /* Увеличиваем анимации для мобильных */
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}

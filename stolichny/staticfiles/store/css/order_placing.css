@@ -1,0 +1,422 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f4f4 !important;
+}
+
+.checkout-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.checkout-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.checkout-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.checkout-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  color: #444;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+  transition: border 0.2s;
+}
+
+input[type="text"], input[type="email"]:focus {
+  outline: none;
+}
+
+.back-btn{
+  color: #e38929;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-left: 2px;
+  margin-top: 2cap;
+
+}
+
+.readonly {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.edit-profile-link {
+  font-size: 0.9rem;
+  color: #e38929;
+  text-decoration: none;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.edit-profile-link:hover {
+  text-decoration: underline;
+}
+
+.product-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.product-list li {
+  margin-bottom: 8px;
+}
+
+.warning-box {
+  background-color: #fff5e5;
+  border-left: 5px solid #ffa600;
+  padding: 16px;
+  margin-top: 24px;
+  font-size: 0.95rem;
+  color: #8a5700;
+  border-radius: 10px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-wrapper {
+  margin-top: 30px;
+}
+
+.total-box {
+  justify-content: space-between;
+  align-items: center;
+  background: #fef8f2;
+  padding: 16px 20px;
+  margin-top: 24px;
+  border: 1px solid #ffe0b3;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3d3d3d;
+  box-shadow: 0 4px 16px rgba(255, 168, 0, 0.05);
+}
+
+.checkout-section ul{
+  white-space: nowrap;       /* Запрещаем перенос строк */
+  overflow: hidden;          /* Скрываем текст, выходящий за пределы */
+  text-overflow: ellipsis;   /* Добавляем многоточие */
+}
+
+.total-label {
+  color: #555;
+}
+
+.total-price {
+  color: #e38929;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.payment-options {
+  display: flex;
+  gap: 20px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.payment-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f9f9f9;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.payment-option:hover {
+  border-color: #e38929;
+  background-color: #fffdf7;
+}
+
+.payment-option input[type="radio"] {
+  display: none;
+}
+
+.payment-option img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.payment-option span {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.payment-option input[type="radio"]:checked + img + span {
+  color: #e38929;
+}
+
+.payment-option input[type="radio"]:checked + img {
+  filter: drop-shadow(0 0 4px rgba(227, 137, 41, 0.6));
+}
+
+.payment-option input[type="radio"]:checked ~ * {
+  font-weight: 700;
+}
+
+.red-placeholder::placeholder{
+  color: rgb(217, 11, 11);
+  opacity: 0.6;
+}
+
+/* ПЛАНШЕТЫ ≤ 768px */
+@media (max-width: 768px) {
+  .checkout-container {
+    max-width: 90%;     /* уже, чем 800px */
+    margin: 40px auto;     /* поменьше отступ сверху/снизу */
+    padding: 0 10px;       /* меньше «воздуха» по бокам */
+  }
+
+  .checkout-card {
+    padding: 24px;         /* уменьшим padding внутри карточки */
+  }
+
+  .checkout-title {
+    font-size: 2rem;       /* чуть меньше заголовок */
+  }
+
+  label,
+  .section-title {
+    font-size: 1.1rem;     /* чуть крупнее для удобства */
+  }
+
+  input[type="text"] {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .btn-submit {
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* СМАРТФОНЫ ≤ 480px */
+@media (max-width: 480px) {
+  .checkout-container {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 0 8px;
+  }
+
+  .checkout-card {
+    padding: 16px;
+  }
+
+  .checkout-title {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  input[type="text"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .total-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .payment-options {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .payment-option {
+    padding: 10px;
+  }
+}
+
+.price-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.discounted {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.old-price {
+  font-size: 18px;
+  font-weight: 500;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.new-price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff9d00;
+}
+
+.discount-badge {
+  background-color: #fff4db;
+  color: #ff9d00;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #ffd49f;
+  box-shadow: 0 2px 6px rgba(255, 160, 0, 0.1);
+}
+
+/* Контейнер для чекбокса */
+.pickup-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.pickup-input + label,
+label > .pickup-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* Обёртка под переключатель */
+.pickup-input + label::before,
+label > .pickup-input::before {
+  content: '';
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  background: linear-gradient(145deg, #ccc, #eee);
+  border-radius: 34px;
+  box-shadow: inset -2px -2px 5px rgba(255,255,255,0.6),
+              inset 2px 2px 5px rgba(0,0,0,0.1);
+  transition: background 0.3s ease;
+}
+
+/* Круглый ползунок */
+.pickup-input + label::after,
+label > .pickup-input::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(145deg, #fff, #dcdcdc);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Когда включено */
+.pickup-input:checked + label::before,
+label > .pickup-input:checked::before {
+  background: linear-gradient(to right, #f6911d, #d47713); /* зелёный градиент */
+}
+
+/* Передвигаем ползунок при активации */
+.pickup-input:checked + label::after,
+label > .pickup-input:checked::after {
+  transform: translateX(22px);
+}
+#delivery_area {
+  appearance: none;
+  background: linear-gradient(to right, #f6911d, #d47713);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 36px 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 250px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+#delivery_area:focus {
+  box-shadow: 0 0 0 3px rgba(246, 145, 29, 0.25);
+  transform: scale(1.01);
+}

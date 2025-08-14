@@ -1,0 +1,155 @@
+    /* Базовые сбросы и типографика */
+    body {
+    font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+
+    /* Карточка заказа */
+    .order-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 20px;
+    margin-bottom: 16px;
+    border-left: 4px solid #4a90e2;
+    }
+
+    .order-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #2c3e50;
+    }
+
+    .order-card p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    color: #7f8c8d;
+    }
+
+    /* Цвета статусов */
+    .status-new { color: #3498db; } /* Новый */
+    .status-processing { color: #2ecc71; } /* В обработке - зеленый */
+    .status-setting-up { color: #e67e22; } /* Собираем - оранжевый */
+    .status-shipped { color: #3498db; } /* В пути - синий */
+    .status-completed { color: #27ae60; } /* Доставлен */
+    .status-cancelled { color: #e74c3c; } /* Отменен */
+    .status-inactive { color: #e74c3c; } /* Неактивен */
+
+    /* Форма */
+    .order-card form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    }
+
+    .order-card select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    min-width: 200px;
+    }
+
+    .order-card button {
+    padding: 8px 16px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    }
+
+    .order-card button:hover {
+    background-color: #357ab8;
+    }
+
+    /* Состояния заказа (цвета левой границы) */
+
+    .order-card[data-status="processing"] {
+    border-left-color: #2ecc71;
+    }
+    .order-card[data-status="setting up"] {
+    border-left-color:rgb(228, 149, 79);
+    }
+    .order-card[data-status="shipped"] {
+    border-left-color: #3498db;
+    }
+    .order-card[data-status="completed"] {
+    border-left-color: #27ae60;
+    }
+    .order-card[data-status="canceled"] {
+    border-left-color: #e74c3c;
+    }
+
+    .order-card[data-status="inactive"] {
+    border-left-color: #e74c3c;
+    }
+
+    .order-card[data-status="delivered"] {
+    border-left-color:rgb(209, 209, 209);
+    }
+
+    /* Стили для товаров */
+    .order-products {
+    margin: 12px 0;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    }
+
+    .order-products b {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    }
+
+    .product-item {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+    }
+
+    .product-item:last-child {
+    border-bottom: none;
+    }
+    .show-inactive-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .show-inactive-btn:hover {
+    background-color: #c0392b;
+    }
+
+    .page-header {
+    text-align: center;
+    margin: 20px 0 30px;
+    color: #2c3e50;
+    position: relative;
+    }
+
+    .page-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    }

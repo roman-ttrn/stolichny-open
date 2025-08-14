@@ -1,0 +1,56 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product-detail-container" data-pid="{{ product.id }}">
+  <div class="product-image">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+  </div>
+
+  <div class="product-details">
+    <h1 class="product-title">{{ product.name }}</h1>
+    <p class="product-price">{{ product.price }} ₽</p>
+
+    {% if product.weight %}
+    <p class="product-weight">{{ product.weight }} г</p>
+    {% endif %}
+
+    {% if product.description %}
+    <p class="product-description">{{ product.description }}</p>
+    {% endif %}
+
+    <table class="nutrition-table">
+      <thead>
+        <tr>
+          <th>Белки</th><th>Жиры</th><th>Углеводы</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ product.protein|default:"–" }} г</td>
+          <td>{{ product.fat|default:"–" }} г</td>
+          <td>{{ product.carbs|default:"–" }} г</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="action-wrapper">
+      <button class="btn-add" data-pid="{{ product.id }}">Добавить</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'store/css/product_page.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{% static 'store/js/product_page.js' %}"></script>
+
+{% endblock %}
+
+
+

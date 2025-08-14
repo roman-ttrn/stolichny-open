@@ -1,0 +1,180 @@
+.edit-profile-box {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+  color: #2D3748;
+  padding: 48px;
+  border-radius: 24px;
+  box-shadow: #1A202C;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.edit-profile-box h2 {
+  text-align: center;
+  margin-bottom: 36px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #1A202C;
+  position: relative;
+}
+
+.edit-profile-box h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ED8936 0%, #F6AD55 100%);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #4A5568;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: #1A202C;
+}
+
+.form-group input::placeholder {
+  color: #A0AEC0;
+  opacity: 1;
+}
+
+.form-group input:focus {
+  border-color: #ED8936;
+  box-shadow: 
+    0 0 0 3px rgba(237, 137, 54, 0.2),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+  background-color: #FFFFFF;
+}
+
+.save-button {
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background: #be7119
+}
+
+.save-button:hover::after {
+  transform: translateX(100%);
+}
+
+/* Микроинтеракции для форм */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.edit-profile-box {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Медиазапрос для планшетов (768px) */
+@media (max-width: 768px) {
+  .edit-profile-box {
+    padding: 36px;
+    border-radius: 20px;
+    max-width: 90%; /* Чуть уже, чем на десктопе */
+    animation: float 8s ease-in-out infinite; /* Медленнее анимация */
+  }
+  
+  .edit-profile-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 28px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group input {
+    padding: 14px 18px;
+    border-radius: 10px;
+  }
+  
+  .save-button {
+    padding: 16px;
+    font-size: 1rem;
+  }
+}
+
+/* Медиазапрос для мобильных (480px) */
+@media (max-width: 480px) {
+  .edit-profile-box {
+    padding: 28px 24px;
+    border-radius: 16px;
+    max-width: 95%; /* Почти на всю ширину */
+    backdrop-filter: blur(4px); /* Меньше размытие для производительности */
+    animation: float 10s ease-in-out infinite; /* Ещё медленнее */
+  }
+  
+  .edit-profile-box h2 {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+  
+  .edit-profile-box h2::after {
+    width: 50px;
+    height: 3px;
+    margin: 10px auto 0;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  
+  .form-group input {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+  
+  .save-button {
+    padding: 14px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+  }
+  
+  /* Упрощаем тени для мобилок */
+  .form-group input:focus {
+    box-shadow: 
+      0 0 0 2px rgba(237, 137, 54, 0.2),
+      inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  }
+}
