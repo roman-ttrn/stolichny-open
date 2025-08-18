@@ -4,67 +4,51 @@ services:
   db:
     image: postgres:15.6
     restart: always
-    user: "999:999"  # Непривилегированный UID и GID
+    user: "999:999"
     volumes:
       - postgres_data:/var/lib/postgresql/data:rw
     env_file:
       - .env
-    secrets:
-      - db_password
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    read_only: true
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    #read_only: true
     privileged: false
     security_opt:
       - no-new-privileges:true
       - apparmor:docker-default
-    cap_drop:
-      - ALL
     networks:
       - internal
     deploy:
       resources:
         limits:
-          cpus: '0.50'
+          cpus: "0.50"
           memory: 512M
-    stdin_open: false
-    tty: false
 
   web:
     build:
       context: .
       dockerfile: Dockerfile
     command: sh /app/entrypoint.sh
-    user: "1001:1001"
+    user: "1000:1000"
     volumes:
-      - ./stolichny:/app:ro
-      - ./stolichny/staticfiles:/app/staticfiles:ro
+      - ./stolichny:/app
+      - staticfiles:/vol/web/static
       - media_volume:/app/media:rw
     env_file:
       - .env
-    secrets:
-      - db_password
-    depends_on:
-      db:
-        condition: service_healthy
+    environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_HOST: db
+        POSTGRES_PORT: 5432
     expose:
       - "8000"
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    read_only: true
+    #read_only: true
     privileged: false
     security_opt:
       - no-new-privileges:true
       - apparmor:docker-default
-    cap_drop:
-      - ALL
     cap_add:
       - NET_BIND_SERVICE
     networks:
@@ -73,10 +57,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.70'
+          cpus: "0.70"
           memory: 512M
-    stdin_open: false
-    tty: false
 
   nginx:
     image: nginx:1.25.3
@@ -85,49 +67,40 @@ services:
       - /tmp
       - /var/run
       - /var/cache/nginx
-
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx-main.conf:/etc/nginx/nginx.conf:ro   # 👉 глобальный конфиг
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro  # 👉 серверный блок
       - media_volume:/app/media:ro
-      - ./app/staticfiles:/app/staticfiles:ro
-      - ./certs/live/yourdomain.com:/etc/letsencrypt/live/yourdomain.com:ro    # fullchain & privkey
+      - staticfiles:/vol/web/static
       - ./nginx/ssl/dhparam.pem:/etc/nginx/ssl/dhparam.pem:ro
-    depends_on:
-      web:
-        condition: service_healthy
-    read_only: true
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /opt/stolichny/nginx/ssl:/etc/nginx/ssl:ro
+    #read_only: true
     privileged: false
-    user: "101:101"
     security_opt:
       - no-new-privileges:true
       - apparmor:docker-default
-    cap_drop:
-      - ALL
     cap_add:
       - NET_BIND_SERVICE
+      - CHOWN
     networks:
       - frontend
     deploy:
       resources:
         limits:
-          cpus: '0.30'
-          memory: 256M
-    stdin_open: false
-    tty: false
+          cpus: "0.30"
 
 volumes:
   postgres_data:
   media_volume:
-  static_volume:
-
-secrets:
-  db_password:
-    file: ./secrets/db_password.txt
+  staticfiles:
+    driver: local
 
 networks:
   internal:
     internal: true
   frontend:
+

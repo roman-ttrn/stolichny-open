@@ -188,9 +188,7 @@ def signup_email(request):
             code_entry.save()
             send_email_verification_code(email, code)
 
-            # Сохраняем данные в отдельной временной модели или можно использовать verified=False до подтверждения
-            request.session['email'] = email
-            print('fwbfwhfwhfufh3uhf9u')
+            request.session['reg_data'] = {'email': email, 'phone': phone, 'first_name': form.cleaned_data['first_name']}
             return redirect('signup_email_verification')
 
         else:
@@ -202,11 +200,7 @@ def signup_email(request):
 
 @ratelimit(key='ip', rate='20/h', method='POST', block=True)
 def signup_email_verification(request):
-    email = request.session.get('email')  # безопасно использовать (только email)
-
-    if not email:
-        return redirect('signup_email')
-
+    email = request.session.get('reg_data')['email']
     try:
         code_entry = EmailVerificationCode.objects.get(email=email, verified=False)
     except EmailVerificationCode.DoesNotExist:
@@ -248,15 +242,13 @@ def signup_email_verification(request):
             return redirect('signup_email')
 
         user = User.objects.create_user(
-            username=email,
-            email=email,
+            username=form.cleaned_data['email'],
+            email=form.cleaned_data['email'],
             first_name=form.cleaned_data['first_name'],
-            last_name=form.cleaned_data['last_name'],
         )
         Profile.objects.create(
             user=user,
             phone_number=form.cleaned_data['phone'],
-            address=form.cleaned_data.get('address', '')
         )
 
         login(request, user)

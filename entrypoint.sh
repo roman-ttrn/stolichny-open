@@ -1,6 +1,11 @@
 #!/bin/sh
+set -e
 
-set -e  # Прекращаем выполнение при ошибках
+echo "⏳ Ожидание запуска Postgres..."
+while ! nc -z "$POSTGRES_HOST" "$POSTGRES_PORT"; do
+  sleep 1
+done
+echo "✅ Postgres доступен!"
 
 echo "Применяем миграции..."
 python manage.py migrate --noinput
@@ -9,6 +14,5 @@ echo "Собираем статические файлы..."
 python manage.py collectstatic --noinput
 
 echo "Запускаем WSGI сервер..."
-# Запуск gunicorn (замени на нужный тебе командный запуск)
 gunicorn stolichny.wsgi:application --bind 0.0.0.0:8000 --workers 3
 

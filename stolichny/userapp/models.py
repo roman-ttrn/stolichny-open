@@ -5,7 +5,7 @@ from datetime import timedelta
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20, unique=True, null=False, blank=False)
+    phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     address = models.CharField(max_length=100, null=False, blank=True)
     active_deliveries = models.BooleanField(default=False)
 
