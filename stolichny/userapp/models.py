@@ -29,6 +29,6 @@ class EmailVerificationCode(models.Model):
     def is_blocked(self):
         return self.is_blocked_until and self.is_blocked_until > timezone.now()
 
-    def block(self, duration=timedelta(minutes=10)):
+    def block(self, duration=timedelta(minutes=5)):
         self.is_blocked_until = timezone.now() + duration
         self.save()

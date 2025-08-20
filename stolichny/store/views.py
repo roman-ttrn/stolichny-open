@@ -22,11 +22,11 @@ from decimal import Decimal
 from store.models import Product, PromoCode
 
 DELIVERY_ZONES = {
-    "Сокол": 130,
-    "п. Стекольный": 150,
-    "Центр": 100,
-    "Аэропорт": 140,
-    # и т.д.
+    'пгт. Сокол (частный сектор)': 250,
+    'пгт. Сокол (ул. Гагарина)': 100,
+    'пгт. Сокол (ул. Королева)': 200,
+    'пгт. Уптар': 600,
+    'пгт. Стекольный': 650,
 }
 
 def calculate_cart_total_with_discount(cart, user):
@@ -63,14 +63,6 @@ def calculate_cart_total_with_discount(cart, user):
         'discount_price': discount_price,
         'discount_percent': discount_percent
     }
-
-DELIVERY_ZONES = {
-    'пгт. Сокол (частный сектор)': 250,
-    'пгт. Сокол (ул. Гагарина)': 100,
-    'пгт. Сокол (ул. Королева)': 200,
-    'пгт. Уптар': 600,
-    'пгт. Стекольный': 650,
-}
 
 def get_price(req):
     rea_name = req.GET.get('area')

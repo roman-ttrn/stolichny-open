@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'stolichny.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -123,10 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = 'vol/web/static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = 'vol/web/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -140,7 +140,3 @@ EMAIL_PORT = os.getenv("EMAIL_PORT", "")
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-
-#SESSION_COOKIE_HTTPONLY = True  # Запрет доступа к кукам через JS
-#SESSION_COOKIE_SECURE = True    # Только HTTPS
-#SESSION_COOKIE_SAMESITE = 'Lax' # Защита от CSRF

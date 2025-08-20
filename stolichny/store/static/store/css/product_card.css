@@ -96,57 +96,6 @@
   padding-left: 4px;
 }
 
-.product-card button,
-.action-wrapper button.add-to-cart {
-  background-image: linear-gradient(to right, #f6911d, #d47713);
-  color: #f3f3f3;
-  font-size: 20px;
-  border-radius: 50%;
-  border: none;
-  width: 25px;
-  height: 25px;
-  font-weight: bold;
-  line-height: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.product-card button:active {
-  transform: scale(0.98);
-}
-
-.cart-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #111;
-}
-
-.cart-controls button {
-  background: transparent;
-  border: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 35px;
-  font-weight: bold;
-  margin: 0 5px;
-}
-
-.cart-controls .increase {
-  color: #19bd04;
-}
-
-.cart-controls .decrease {
-  color: #c21212;
-}
-
 @media (max-width: 480px) {
   .product-card {
     width: 40%; /* было 48% — теперь карточка уже */
@@ -186,3 +135,136 @@
 }
 }
 
+
+
+/* -------------------------
+   Рисуем плюс через ::before и ::after
+   ------------------------- */
+
+/* Сильный селектор чтобы точно переопределить старые правила */
+.product-card .action-wrapper button.add-to-cart {
+  /* базовая форма круга */
+  position: relative;            /* нужно для абсолютных псевдоэлементов */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 50%;
+  background-image: linear-gradient(to right, #f6911d, #d47713);
+  cursor: pointer;
+  color: transparent;            /* скрываем текст, если он есть; плюс мы рисуем псевдоэлементом */
+  overflow: visible;             /* нужно, если хотим тонкие тени */
+  margin-right: 10px;
+}
+
+/* Горизонтальная и вертикальная полоски — образуют плюс.
+   Центрируем их с помощью left/top 50% + transform */
+.product-card .action-wrapper button.add-to-cart::before,
+.product-card .action-wrapper button.add-to-cart::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #f3f3f3;           /* цвет знака (можно подогнать) */
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
+  pointer-events: none;          /* чтобы клик попадал на кнопку */
+}
+
+/* Вертикальная ножка плюса */
+.product-card .action-wrapper button.add-to-cart::before {
+  width: 2px;                    /* толщина палки — подбирай 1..2 */
+  height: 54%;                   /* длина — доля от высоты кнопки */
+}
+
+/* Горизонтальная ножка плюса */
+.product-card .action-wrapper button.add-to-cart::after {
+  height: 2px;
+  width: 54%;
+}
+
+/* Активное состояние (маленькая анимация без сдвига текста) */
+.product-card .action-wrapper button.add-to-cart:active {
+  transform: scale(0.97);
+}
+
+/* Если нужно более тонкий/толстый плюс на разных экранах */
+@media (max-width: 480px) {
+  .product-card .action-wrapper button.add-to-cart {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .product-card .action-wrapper button.add-to-cart::before { height: 52%; width: 2px; }
+  .product-card .action-wrapper button.add-to-cart::after  { width: 52%; height: 2px; }
+}
+
+/* -------------------------
+   Уменьшаем кнопки increase/decrease и центрируем знак
+   ------------------------- */
+
+.cart-controls button {
+  background: transparent;
+  border: none;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;   /* уменьшили */
+  line-height: 1;
+  padding: 0;
+  margin: 0 4px;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* модификация если у вас где-то есть старые правила font-size:35px !important; */
+/* @important - добавляй только при необходимости, если старое правило не переопределяется */
+.cart-controls button { font-size: 12px !important; }
+
+/* Центрируем цифру количества между кнопками */
+.cart-controls .quantity {
+  min-width: 18px;
+  text-align: center;
+  display: inline-block;
+  line-height: 18px;
+  font-size: 13px;
+}
+
+/* Мобильные корректировки */
+@media (max-width: 480px) {
+  .cart-controls button { width: 16px; height: 16px; font-size: 11px; }
+  .cart-controls .quantity { min-width: 16px; line-height: 16px; font-size: 12px; }
+}
+
+/* Цвета для кнопок increase / decrease — более специфичные селекторы */
+.product-card .action-wrapper .cart-controls > button.increase {
+  color: #19bd04;          /* зелёный */
+  -webkit-text-fill-color: #19bd04; /* для надёжности в некоторых браузерах */
+  font-weight: 600;
+}
+
+/* Красный для минуса */
+.product-card .action-wrapper .cart-controls > button.decrease {
+  color: #c21212;          /* красный */
+  -webkit-text-fill-color: #c21212;
+  font-weight: 600;
+}
+
+/* Состояния hover/focus — слегка подчёркиваем интерактивность */
+.product-card .action-wrapper .cart-controls > button.increase:hover,
+.product-card .action-wrapper .cart-controls > button.increase:focus {
+  filter: brightness(0.98);
+  outline: none;
+}
+
+.product-card .action-wrapper .cart-controls > button.decrease:hover,
+.product-card .action-wrapper .cart-controls > button.decrease:focus {
+  filter: brightness(0.98);
+  outline: none;
+}

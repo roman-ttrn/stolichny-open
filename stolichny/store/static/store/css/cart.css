@@ -256,3 +256,69 @@ h3 b {
     text-overflow: ellipsis;   /* Добавляем многоточие */
     max-width: 200px;          /* Устанавливаем максимальную ширину (настройте под ваш дизайн) */
 }
+
+/* ============= Цвета для текстовых + / − (карточки и корзина) ============= */
+
+/* Основные правила — центрируем текст внутри кнопок и задаём нормальный line-height */
+.product-card .action-wrapper .cart-controls > button,
+.cart-container .cart-controls > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;           /* чтобы не смещал внутренний текст */
+  min-width: 18px;
+  min-height: 18px;
+  font-size: 13px;      /* подгони при необходимости */
+  background: #eee;     /* сохраняем текущий фон */
+  border: none;         /* если хочешь границу — добавь отдельно */
+  cursor: pointer;
+}
+
+/* Зелёный плюс (текст) */
+.product-card .action-wrapper .cart-controls > button.increase,
+.cart-container .cart-controls > button.increase {
+  color: #19bd04;
+  -webkit-text-fill-color: #19bd04; /* для WebKit (Safari/Chrome) */
+  font-weight: 600;
+}
+
+/* Красный минус (текст) */
+.product-card .action-wrapper .cart-controls > button.decrease,
+.cart-container .cart-controls > button.decrease {
+  color: #c21212;
+  -webkit-text-fill-color: #c21212;
+  font-weight: 600;
+}
+
+/* Hover / focus — лёгкая подсветка без смены цвета текста */
+.product-card .action-wrapper .cart-controls > button.increase:hover,
+.cart-container .cart-controls > button.increase:hover {
+  filter: brightness(0.98);
+  outline: none;
+}
+
+.product-card .action-wrapper .cart-controls > button.decrease:hover,
+.cart-container .cart-controls > button.decrease:hover {
+  filter: brightness(0.98);
+  outline: none;
+}
+
+/* Мобильные размеры */
+@media (max-width: 480px) {
+  .product-card .action-wrapper .cart-controls > button,
+  .cart-container .cart-controls > button {
+    min-width: 16px;
+    min-height: 16px;
+    font-size: 11px;
+  }
+}
+
+/* ============= ВАЖНО =============
+Если после добавления этот цвет не применяется, значит есть более «тяжёлое» правило (например с !important или более специфичным селектором).
+В таком случае можно временно повысить приоритет — используйте это только при необходимости: */
+
+
+.product-card .action-wrapper .cart-controls > button.increase { color: #19bd04 !important; -webkit-text-fill-color: #19bd04 !important; }
+.product-card .action-wrapper .cart-controls > button.decrease { color: #c21212 !important; -webkit-text-fill-color: #c21212 !important; }
+

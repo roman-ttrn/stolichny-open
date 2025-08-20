@@ -29,10 +29,6 @@
 
           <p><strong>Телефон:</strong> +7{{ order.phone }}</p>
 
-          {% if request.user.email %}
-            <p><strong>Эл. почта:</strong> {{ request.user.email }}</p>
-          {% endif %}
-
           {% if order.cash %}
             <p><strong>Расчет: </strong>Наличные</p>
           {% else %}

@@ -1,4 +1,4 @@
-from time import sleep, timezone
+from time import *
 from datetime import timedelta
 
 from django.shortcuts import render, redirect
@@ -66,10 +66,9 @@ def login_email(request):
 
     if request.method == 'POST':
         email = request.POST.get('email')
+        print(email)
 
         try:
-            user = User.objects.get(email=email)
-
             code_entry, created = EmailVerificationCode.objects.get_or_create(email=email, verified=False)
 
             if code_entry.is_blocked():
@@ -88,9 +87,12 @@ def login_email(request):
                 return render(request, 'userapp/login_email.html')
 
             code_entry.save()
+            print('код')
             send_email_verification_code(email, code)
-
+            print('отправлен')
+            request.session['reg_data'] = {'email': email}
             request.session['email'] = email
+            print('redirect')
             return redirect('login_email_verify', email=email)
 
         except User.DoesNotExist:
@@ -161,6 +163,7 @@ def signup_email(request):
 
         if form.is_valid():
             email = form.cleaned_data['email']
+            print(email)
             phone = form.cleaned_data['phone']
 
             if User.objects.filter(email=email).exists() or Profile.objects.filter(phone_number=phone).exists():
@@ -189,6 +192,7 @@ def signup_email(request):
             send_email_verification_code(email, code)
 
             request.session['reg_data'] = {'email': email, 'phone': phone, 'first_name': form.cleaned_data['first_name']}
+            print(email)
             return redirect('signup_email_verification')
 
         else:
@@ -246,21 +250,23 @@ def signup_email_verification(request):
             email=form.cleaned_data['email'],
             first_name=form.cleaned_data['first_name'],
         )
-        Profile.objects.create(
-            user=user,
-            phone_number=form.cleaned_data['phone'],
-        )
+        if user.profile:
+            user.profile.phone_number=form.cleaned_data['phone']
+        else:
+            sleep(2)
+            user.profile.phone_number=form.cleaned_data['phone']
 
         login(request, user)
 
-        del request.session['reg_email']
         if 'reg_data' in request.session:
             del request.session['reg_data']
+        if 'email' in request.session:
+            del request.session['email']
 
         messages.success(request, 'Аккаунт успешно создан.')
         return redirect('catalog')
 
-    return render(request, 'userapp/email_verify.html', {'email': email})
+    return render(request, 'userapp/email_verify.html', {'user_email': email})
 
 
 def logout_user(request):
@@ -272,16 +278,18 @@ def logout_user(request):
 @require_POST
 @ratelimit(key='ip', rate='20/h', block=True)
 def resend_code(request):
-    email = request.session.get('email')
+    email = request.session.get('reg_data')['email']
 
     code_obj, created = EmailVerificationCode.objects.get_or_create(email=email, verified=False)
 
     if code_obj.is_blocked():
+        print('Слишком много попыток. Повторите позже.')
         return JsonResponse({'error': 'Слишком много попыток. Повторите позже.'}, status=429)
 
     code_obj.resend_attempts += 1
     if code_obj.resend_attempts > 5:
         code_obj.block()
+        print('Превышено число попыток. Повторите через 10 минут.')
         return JsonResponse({'error': 'Превышено число попыток. Повторите через 10 минут.'}, status=429)
 
     code_obj.code = generate_verification_code()
@@ -291,8 +299,9 @@ def resend_code(request):
     try:
         send_email_verification_code(email, code_obj.code)
     except Exception:
+        print('Ошибка отправки письма. Повторите позже.')
         return JsonResponse({'error': 'Ошибка отправки письма. Повторите позже.'}, status=500)
-
+    print('success')
     return JsonResponse({'success': True})
 
 
