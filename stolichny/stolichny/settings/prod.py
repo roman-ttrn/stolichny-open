@@ -29,6 +29,11 @@ X_FRAME_OPTIONS = 'DENY'
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # драйвер для PostgreSQL
