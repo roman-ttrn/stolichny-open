@@ -1,4 +1,19 @@
-django
-pillow
-dnspython
+# Django — основной фреймворк
+Django>=4.2,<5.1
+
+# Работа с изображениями
+Pillow>=9.5,<11.0
+
+# Для работы с DNS (например, email-валидация и т.п.)
+dnspython>=2.3,<3.0
+
+# Ограничение запросов (rate limiting)
 django-ratelimit
+
+# Работа с .env файлами
+python-dotenv>=1.0,<2.0
+
+# Драйвер для PostgreSQL
+psycopg2>=2.9,<3.0
+
+gunicorn
