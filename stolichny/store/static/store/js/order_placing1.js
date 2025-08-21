@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             door_delivery: doorDelivery
         });
 
-        fetch(`/api/get_delivery_price/?${params.toString()}`, {
+        fetch(`/api/get_delivery_price/?${params.toString()}&_ts=${Date.now()}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'

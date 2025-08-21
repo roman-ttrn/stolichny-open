@@ -106,6 +106,8 @@ def get_price(req):
         if discount_percent:
             discount_price = full_price_with_delivery * (Decimal('1.00') - Decimal(discount_percent) / Decimal('100'))
             discount_price = discount_price.quantize(Decimal('0.01'))
+    
+    tm.sleep(1)
 
     return JsonResponse({
         'old_total': full_price_with_delivery,
