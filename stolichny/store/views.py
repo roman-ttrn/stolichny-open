@@ -107,11 +107,6 @@ def get_price(req):
             discount_price = full_price_with_delivery * (Decimal('1.00') - Decimal(discount_percent) / Decimal('100'))
             discount_price = discount_price.quantize(Decimal('0.01'))
 
-    print("Зона:", rea_name, "Pickup:", is_pickup, "Door delivery:", is_door_delivery)
-    print("Товары:", total_price, "Доставка:", delivery_fee, "Скидка:", discount_percent, "Итого:", discount_price)
-
-    tm.sleep(2)
-
     return JsonResponse({
         'old_total': full_price_with_delivery,
         'final_total': discount_price,
@@ -645,3 +640,5 @@ def accept_cookies(request):
         request.session['cookie_accepted'] = True
         return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)
+
+ 
