@@ -18,15 +18,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function safeTextUpdate(element, text) {
         if (element) {
             element.textContent = String(text);
-            console.debug(`Updated ${element.tagName}#${element.id} with text: ${text}`);
         }
     }
 
     function updateDeliveryFieldsState() {
         const isPickup = pickupCheckbox.checked;
         const hasArea = deliverySelect.value !== "";
-
-        console.debug(`updateDeliveryFieldsState: isPickup=${isPickup}, hasArea=${hasArea}`);
 
         deliverySelect.disabled = isPickup;
         addressField.disabled = isPickup;
@@ -37,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (shouldDisableDoorDelivery) {
             doorDeliveryCheckbox.checked = false; // снимаем галочку, если чекбокс недоступен
         }
+
+        console.debug('Delivery fields state updated', { isPickup, hasArea, shouldDisableDoorDelivery });
     }
 
     function fetchUpdatedPrice() {
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const isPickup = pickupCheckbox.checked;
         const doorDelivery = doorDeliveryCheckbox.checked;
 
-        console.debug(`fetchUpdatedPrice: area=${area}, isPickup=${isPickup}, doorDelivery=${doorDelivery}`);
+        console.debug('Fetching updated price', { area, isPickup, doorDelivery });
 
         // Показываем "Загрузка..." перед отправкой запроса
         safeTextUpdate(deliveryFeeBox, 'Загрузка...');
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            console.debug('fetchUpdatedPrice: response data:', data);
+            console.debug('Received updated price data', data);
 
             if (!('delivery_fee' in data) || !('final_total' in data)) {
                 throw new Error('Некорректные данные с сервера');
@@ -99,6 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const hasArea = deliverySelect.value !== "";
             doorDeliveryCheckbox.disabled = !hasArea || isPickup;
+
+            console.debug('Updated price data applied', { hasDiscount, hasArea, doorDeliveryCheckbox });
         })
         .catch(error => {
             console.error('Ошибка:', error);
@@ -109,21 +110,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     deliverySelect.addEventListener('change', () => {
-        console.debug('Delivery select changed');
         updateDeliveryFieldsState();
         fetchUpdatedPrice();
     });
 
     pickupCheckbox.addEventListener('change', () => {
-        console.debug('Pickup checkbox changed');
         updateDeliveryFieldsState();
         fetchUpdatedPrice();
     });
 
-    doorDeliveryCheckbox.addEventListener('change', () => {
-        console.debug('Door delivery checkbox changed');
-        fetchUpdatedPrice();
-    });
+    doorDeliveryCheckbox.addEventListener('change', fetchUpdatedPrice);
 
     updateDeliveryFieldsState(); // при загрузке
 });
