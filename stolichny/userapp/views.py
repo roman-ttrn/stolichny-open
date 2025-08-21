@@ -69,6 +69,11 @@ def login_email(request):
         print(email)
 
         try:
+            user_exists = User.objects.filter(email=email).exists()
+            if not user_exists:
+                messages.error(request, 'Пользователь с таким email не найден.')
+                return render(request, 'userapp/login_email.html')
+            
             code_entry, created = EmailVerificationCode.objects.get_or_create(email=email, verified=False)
 
             if code_entry.is_blocked():
