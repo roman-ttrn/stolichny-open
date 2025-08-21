@@ -17,6 +17,7 @@ class RegistrationForm(forms.Form):
     )
     phone = forms.CharField(
         label="Номер телефона",
+        required=True,
         validators=[
             RegexValidator(r'^9\d{9}$',  message="Введите корректный номер телефона, начинающийся с 9")
         ],
