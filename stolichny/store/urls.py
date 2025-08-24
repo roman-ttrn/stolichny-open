@@ -26,5 +26,4 @@ urlpatterns = [
     path('support/',views.support, name='support'),
     path('promo/', views.promo, name='promo'),
     path('api/get_delivery_price/', views.get_price, name='get_price'),
-    path('accept-cookies/', views.accept_cookies, name='accept_cookies'),
 ]
