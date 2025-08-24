@@ -383,7 +383,8 @@ def order_placing(request):
                 return redirect('cart')
 
         except Product.DoesNotExist:
-            messages.error(request, 'Продукт не найден')
+            request.session['cart'] = {}
+            messages.error(request, 'Продукт не найден, корзина очищена в целях безопасности')
             return redirect('cart')
 
     else:
