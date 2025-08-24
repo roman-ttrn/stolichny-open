@@ -637,12 +637,4 @@ def promo(req):
         messages.error(req, 'Подтвердите номер телефона перед использованием.')
         return redirect('/')
     return render(req, 'store/promo.html')
-
-
-def accept_cookies(request):
-    if request.method == 'GET':
-        request.session['cookie_accepted'] = True
-        return JsonResponse({'status': 'ok'})
-    return JsonResponse({'status': 'error'}, status=400)
-
  
