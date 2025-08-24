@@ -157,9 +157,9 @@
 </style>
 
 {% if show_inactive %}
-  <a href={% url "admin_dashboard" %} class="show-inactive-btn" style="background-color: #3498db;">Активные заказы</a>
+  <a href={% url "admin_dashboard" %} class="show-inactive-btn" style="background-color: #3498db;" data-show-inactive="false">Активные заказы</a>
 {% else %}
-  <a href="?show_inactive=true" class="show-inactive-btn">Отмененные/неактивные заказы</a>
+  <a href="?show_inactive=true" class="show-inactive-btn" data-show-inactive="true">Отмененные/неактивные заказы</a>
 {% endif %}
 
 <div class="page-header">
@@ -179,6 +179,15 @@
 
 <script>
 
+    let currentShowInactive = {{ show_inactive|yesno:"true,false" }};
+
+    function updateShowInactiveButton() {
+        const button = document.querySelector('.show-inactive-btn');
+        if (button) {
+            currentShowInactive = button.getAttribute('data-show-inactive') === 'true';
+        }
+    }
+
     let page = {{ orders.number }};
     let loading = false;
     let hasNextPage = {{ has_next|yesno:"true,false" }};
@@ -188,8 +197,9 @@
         console.log('ajax')
         loading = true;
         page += 1
+        updateShowInactiveButton();
 
-        fetch(`${window.location.pathname}?page=${page}`,{
+        fetch(`${window.location.pathname}?page=${page}&show_inactive=${currentShowInactive}`,{
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
             .then(res => res.json())
@@ -211,7 +221,5 @@
             loadNextPage()
         }
     })
-
-
-
+    
 </script>

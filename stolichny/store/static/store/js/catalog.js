@@ -1,3 +1,33 @@
+  // --- При загрузке: если страница сбросила active на "Все", подправляем URL под первый слаг ---
+document.addEventListener('DOMContentLoaded', () => {
+  const firstBtn = document.querySelector('.subcategory-btn'); // первая кнопка гарантированно "Все"
+  if (!firstBtn) return;
+
+  const slug = firstBtn.dataset.slug;
+  if (!slug) return; // если data-slug нет — ничего не делаем
+
+  // простая нормализация: гарантируем ровно один слеш в конце
+  function norm(path) {
+    if (!path) return '/';
+    return path.replace(/\/+$/, '') + '/';
+  }
+
+  const desiredPath = norm(`/catalog/${encodeURIComponent(slug)}/`);
+  const currentPath = norm(window.location.pathname);
+
+  // Если текущий путь отличается — заменим URL (без перезагрузки)
+  if (currentPath !== desiredPath) {
+    const newUrl = desiredPath + window.location.search + window.location.hash;
+    history.replaceState(null, '', newUrl);
+  }
+
+  // Установим currentCatalogPath и active на первой кнопке, чтобы остальной код работал корректно
+  currentCatalogPath = desiredPath;
+  document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
+  firstBtn.classList.add('active');
+});
+
+  let currentCatalogPath = window.location.pathname.replace(/\/+$/, '') + '/';
   const THROTTLE_DELAY = 500; // задержка 500 мс между запросами
   // 1) Получаем CSRF‑токен из куки
   function getCSRFToken() {
@@ -225,26 +255,34 @@
   let loading = false;
 
 
-  function loadNextPage() {
-    if (loading || !hasNextPage) return;
-    loading = true;
+function loadNextPage() {
+  if (loading || !hasNextPage) return;
+  loading = true;
 
-    page += 1;
+  // увеличиваем страницу — дальше будет запрошена следующая страница
+  page += 1;
 
-    fetch(`${window.location.pathname}?page=${page}`, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+  // Формируем URL: currentCatalogPath уже содержит корректный путь вида "/catalog/slug/".
+  const url = `${currentCatalogPath}?page=${page}`;
+
+  fetch(url, {
+    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Network response was not ok');
+      return res.json();
     })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('product-grid').insertAdjacentHTML('beforeend', data.html);
-        hasNextPage = data.has_next;
-        loading = false;
-      })
-      .catch(err => {
-        console.error('Ошибка подгрузки:', err);
-        loading = false;
-      });
-  }
+    .then(data => {
+      document.getElementById('product-grid').insertAdjacentHTML('beforeend', data.html);
+      hasNextPage = data.has_next;
+      loading = false;
+    })
+    .catch(err => {
+      console.error('Ошибка подгрузки:', err);
+      loading = false;
+    });
+}
+
   let isThrottled = false;
   // Отслеживаем скролл
   window.addEventListener('scroll', () => {
@@ -261,20 +299,29 @@
   btn.addEventListener('click', () => {
     const slug = btn.dataset.slug;
 
-    // Убираем класс "active" со всех, ставим на текущую
+    // UI: переключаем active
     document.querySelectorAll('.subcategory-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // AJAX-запрос на подкатегорию
-    fetch(`/catalog/${slug}/`, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('product-grid').innerHTML = data.html;
-      page = 1; // сброс страницы
-      hasNextPage = data.has_next;
-    })
-    .catch(err => console.error('Ошибка подкатегории:', err));
+    // Формируем новый базовый путь для запросов.
+    currentCatalogPath = `/catalog/${encodeURIComponent(slug)}/`;
+
+    // AJAX-запрос на подкатегорию (возвращает HTML и has_next)
+    fetch(`${currentCatalogPath}?page=1`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        document.getElementById('product-grid').innerHTML = data.html;
+        page = 1; // мы сейчас показали страницу 1
+        hasNextPage = data.has_next;
+
+        // Обновим историю браузера — полезно для бэка/кармашков
+        if (history && history.pushState) {
+          history.pushState(null, '', currentCatalogPath);
+        }
+      })
+      .catch(err => console.error('Ошибка подкатегории:', err));
   });
-  });
+});

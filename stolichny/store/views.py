@@ -145,6 +145,7 @@ def catalog(request, category_slug=None):
         page_number = 1
 
     paginator = Paginator(products, 30)
+
     page_obj = paginator.get_page(page_number)
 
     # AJAX-запрос — отдаем HTML карточек

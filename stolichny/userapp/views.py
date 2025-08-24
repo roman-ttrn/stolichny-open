@@ -66,14 +66,16 @@ def login_email(request):
 
     if request.method == 'POST':
         email = request.POST.get('email')
-        print(email)
 
         try:
-            user_exists = User.objects.filter(email=email).exists()
-            if not user_exists:
+            user = User.objects.filter(email=email).first()
+            if not user:
                 messages.error(request, 'Пользователь с таким email не найден.')
                 return render(request, 'userapp/login_email.html')
             
+            if user.is_staff:
+                return redirect('admin_login')
+
             code_entry, created = EmailVerificationCode.objects.get_or_create(email=email, verified=False)
 
             if code_entry.is_blocked():

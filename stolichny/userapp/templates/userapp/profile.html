@@ -25,6 +25,7 @@
                 <span>К каталогу</span>
             </button>
           </a>
+
           <div class='desktop-only'>
             <a href="{% url 'promo' %}" class="edit-link">
               <button class="action-button">
@@ -41,6 +42,21 @@
               </button>
             </a>
           </div>
+
+          {% if request.user.is_staff %}
+            <a href="{% url 'admin_dashboard' %}" class="edit-link">
+              <button class="action-button">
+                  <span>Панель заказов</span>
+              </button>
+            </a>
+
+            <a href="{% url 'product_create' %}" class="edit-link">
+              <button class="action-button">
+                  <span>+Товар</span>
+              </button>
+            </a>
+          {% endif %}
+
             <form method="post" class="logout-form" action="{% url 'logout_user' %}">
                 {% csrf_token %}
                 <button type="submit" class="logout">

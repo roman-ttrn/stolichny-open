@@ -133,3 +133,10 @@ class UserPromoCodeUsage(models.Model):
 
     class Meta:
         unique_together = ('user', 'promo_code')  # запретить повторное использование одним пользователем
+
+class LoginAttempt(models.Model):
+    ip = models.GenericIPAddressField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.ip} — {self.timestamp}"
