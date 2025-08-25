@@ -20,7 +20,7 @@ from .forms import *
 def profile(request):
     return render(request, 'userapp/profile.html')
 
-@ratelimit(key='ip', rate='20/h', method='POST', block=True)
+@ratelimit(key='ip', rate='15/h', method='POST', block=True)
 @login_required
 def profile_edit(request):
     user = request.user

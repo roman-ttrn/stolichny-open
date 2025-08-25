@@ -352,14 +352,8 @@ def order_placing(request):
         discount_price = None
         try:
             cart = request.session.get('cart', {})
-            cart_items = []
+            cart_items = [{'product': product, 'quantity': cart.get(str(product.id), {}).get('quantity', 0)} for product in Product.objects.filter(id__in=cart.keys())]
 
-            for product_id, product_data in cart.items():
-                product = Product.objects.get(pk=product_id)
-                cart_items.append({
-                    'product': product,
-                    'quantity': product_data['quantity']
-                })
             if len(cart_items) > 0:
                 total = sum(item['product'].price * item['quantity'] for item in cart_items)
 
@@ -455,16 +449,30 @@ def order_sending(request):
 
             order_price = 0
 
-            # Привязка продуктов и их количества
-            for product_id, product_data in cart.items():
-                try:
-                    product = Product.objects.get(id=product_id)
-                    OrderItem.objects.create(order=order, product=product, quantity=product_data['quantity'])
+            try:
+                # Привязка продуктов и их количества
+                products_map = {str(product.id): product for product in Product.objects.filter(id__in=cart.keys())}
+                order_items = []
+                for product_id, product_data in cart.items():
+                    product = products_map.get(product_id)
+                    if not product:
+                        messages.error(request, f"Продукт с ID {product_id} не существует")
+                        return redirect('order_placing')
+
+                    order_items.append(OrderItem(
+                        order=order,
+                        product=product,
+                        quantity=product_data['quantity']
+                    ))
                     order_price += product.price * product_data['quantity']
-                    print(order.price)
-                except Product.DoesNotExist:
-                    messages.error(request, f"Продукт с ID {product_id} не существует")
-                    return redirect('order_placing')
+
+                OrderItem.objects.bulk_create(order_items)
+            
+            except Exception as e:
+                order.delete()
+                messages.error(request, f"Произошла ошибка при создании заказа, попробуйте позже.")
+                return redirect('order_placing')
+
 
             promo_codes = PromoCode.objects.filter(promo__user=request.user, promo__active_usage=True, active=True,)
             if promo_codes.exists():
