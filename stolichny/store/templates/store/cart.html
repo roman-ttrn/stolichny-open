@@ -3,6 +3,10 @@
 {% load cart_extras %}
 
 {% block content %}
+    <template id="cart-empty-template">
+        {% include 'store/includes/empty_cart.html' %}
+    </template>
+
     <div class="cart-container">
         <a href='{{ previous_page|default:'/' }}' class='back-btn'>← Назад</a>
         <h2>Корзина</h2>
@@ -69,7 +73,7 @@
  
 
 {% block scripts %}
-    <script src="{% static 'store/js/cart.js' %}" defer></script>
+    <script src="{% static 'store/js/cart1.js' %}" defer></script>
 
 {% endblock %}
 

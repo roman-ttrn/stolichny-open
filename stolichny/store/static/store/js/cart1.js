@@ -14,7 +14,9 @@
         }
     
         if (cartItemCount === 0) {
-            document.querySelector('.cart-container').innerHTML = '<h2>Корзина</h2>{% if user_promos %}<div class="active-promos"><h4>Ваши активные акции:</h4><ul>{% for promo in user_promos %}<li class="promo-item">{{ promo.description|default:"Без описания" }}</li>{% endfor %}</ul></div>{% endif %} <p class="empty-cart">Корзина пуста</p>';
+            const tpl = document.getElementById('cart-empty-template');
+            document.querySelector('.cart-container').innerHTML = tpl.innerHTML;
+
         }
     }
     
