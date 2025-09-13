@@ -4,7 +4,7 @@
     justify-content: center;
     min-height: 75vh;
     padding: 40px 20px;
-    background: #fff;
+    background: #f4f4f4;
   }
 
   .promo-card {
@@ -16,13 +16,6 @@
     width: 100%;
     text-align: center;
     position: relative;
-  }
-
-  .promo-title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    color: #333;
   }
 
   .promo-input {
@@ -123,3 +116,10 @@
       font-size: 15px;
     }
   }
+
+  .promo-image {
+  display: block;
+  margin: 0 auto 20px auto; /* центрирование и отступ снизу */
+  max-width: 250px; /* ограничиваем ширину */
+  height: auto; /* сохраняем пропорции */
+}

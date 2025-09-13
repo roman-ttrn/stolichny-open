@@ -642,7 +642,7 @@ def promo(req):
                 messages.error(req, 'Такого промокода не существует.')
                 return render(req, 'store/promo.html')
     else:
-        messages.error(req, 'Подтвердите номер телефона перед использованием.')
+        messages.error(req, 'Подтвердите почту перед использованием.')
         return redirect('/')
     return render(req, 'store/promo.html')
  
