@@ -46,13 +46,19 @@ body{
 }
 
 .story-card span {
-  position: relative;
+  position: absolute;
+  bottom: 12px;   /* Отступ от низа */
+  left: 50%;
+  transform: translateX(-50%); /* Центрируем по горизонтали */
   z-index: 2;
-  color: rgb(255, 255, 255);
+  color: #fff;
   font-weight: 600;
   font-size: 15px;
+  text-align: center;          /* Центровка, если 2 строки */
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  padding: 0 6px;              /* Чтобы текст не прилипал к краям */
 }
+
 
 
 @media (max-width: 1024px) and (orientation: portrait) {

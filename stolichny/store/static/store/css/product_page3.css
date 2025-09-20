@@ -1,161 +1,317 @@
-.product-detail-container {
-  max-width: 1200px;
-  margin: 60px auto;
+/* product_page3.css — modern premium look (исправленный) */
+:root{
+  --prd-bg: #ffffff;
+  --prd-ink: #111827;
+  --prd-muted: #6b7280;
+  --prd-accent1: #f6911d;
+  --prd-accent2: #d47713;
+  --prd-radius-lg: 20px;
+  --prd-radius-md: 12px;
+  --prd-shadow-lg: 0 18px 50px rgba(16,24,40,0.12);
+  --prd-shadow-md: 0 8px 30px rgba(16,24,40,0.08);
+  --prd-gap: 28px;
+  --prd-max-width: 1180px;
+  --prd-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Base container (scoped) */
+.product-detail-container.prd-root {
+  max-width: var(--prd-max-width);
+  margin: 56px auto;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: var(--prd-gap);
+  align-items: start;
+  background: linear-gradient(180deg, rgba(250,250,252,1) 0%, rgba(255,255,255,1) 100%);
+  border-radius: var(--prd-radius-lg);
+  box-shadow: var(--prd-shadow-lg);
+  font-family: var(--prd-font-sans);
+  color: var(--prd-ink);
+  overflow: visible;
+}
+
+/* Left column (image) */
+.product-detail-container.prd-root .prd-left {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  padding: 20px;
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-  background-color: #fff;
+  align-items: center;
+  justify-content: center;
 }
 
-.product-image img {
-  max-width: 450px;
+.product-detail-container.prd-root .prd-image {
   width: 100%;
-  border-radius: 16px;
-  object-fit: cover;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  max-width: 740px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--prd-shadow-md);
+  background: linear-gradient(180deg, #fcfcfd, #fff);
+  border: 1px solid rgba(15,23,42,0.03);
 }
 
-.product-details {
-  flex: 1;
+.product-detail-container.prd-root .prd-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  transform-origin: center;
+  transition: transform .6s cubic-bezier(.2,.9,.28,1);
+}
+
+.product-detail-container.prd-root .prd-image:hover img {
+  transform: scale(1.03);
+}
+
+/* optional badge */
+.product-detail-container.prd-root .prd-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: linear-gradient(90deg, rgba(79,158,245,0.95), rgba(54,115,217,0.95));
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 8px 30px rgba(54,115,217,0.08);
+}
+
+/* Right column (details) */
+.product-detail-container.prd-root .prd-right {
+  padding: 12px 6px;
   display: flex;
   flex-direction: column;
+  gap: 18px;
+}
+
+/* Header: title + price — CENTERED (исправлено) */
+.product-detail-container.prd-root .prd-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 20px;
+  gap: 8px;
+  text-align: center;
 }
 
-.product-title {
-  font-size: 36px;
+.product-detail-container.prd-root .prd-title {
+  font-size: 30px;
+  line-height: 1.05;
+  font-weight: 800;
+  margin: 0;
+  color: var(--prd-ink);
+  letter-spacing: -0.02em;
+  /* предотвратить разрыв слова посередине */
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  white-space: normal;
+  text-align: center; /* выравнивание по центру */
+  max-width: 100%;
+}
+
+.product-detail-container.prd-root .prd-price {
+  background: linear-gradient(90deg, rgba(246,145,29,0.12), rgba(212,119,19,0.06));
+  color: var(--prd-accent1);
+  font-weight: 800;
+  font-size: 22px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  align-self: center; /* по центру */
+  text-align: center;  /* цена по центру */
+  box-shadow: 0 6px 18px rgba(246,145,29,0.06);
+}
+
+/* Meta & description */
+.product-detail-container.prd-root .prd-meta {
+  color: var(--prd-muted);
+  font-size: 15px;
+}
+
+.product-detail-container.prd-root .prd-weight {
   font-weight: 700;
-  margin-bottom: 12px;
-
-  overflow-wrap: break-word;  /* Переносит длинные слова */
-  word-wrap: break-word;     /* Для старых браузеров */
-  word-break: break-word;    /* Разрешает разрыв слов */
-  white-space: normal;       /* Разрешает перенос строк */
-}
-
-.product-price {
-  font-size: 28px;
-  font-weight: 600;
-  color: #f6911d;
+  color: var(--prd-ink);
   margin-bottom: 8px;
 }
 
-.product-weight {
+.product-detail-container.prd-root .prd-description {
   font-size: 16px;
-  color: #777;
-  margin-bottom: 24px;
-}
-
-.product-description {
-  font-size: 18px;
   line-height: 1.6;
-  margin-bottom: 32px;
-  color: #333;
+  color: #374151;
+  margin: 6px 0 0;
 }
 
-.nutrition-table {
-  border-collapse: collapse;
+/* Nutrition table — modern card */
+.product-detail-container.prd-root .prd-nutrition {
   width: 100%;
-  margin-bottom: 32px;
-  font-size: 16px;
-  background-color: #fafafa;
+  border-collapse: collapse;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 0 1px #eee;
+  box-shadow: 0 6px 20px rgba(15,23,42,0.03);
+  background: linear-gradient(180deg,#fff,#fbfbfc);
 }
 
-.nutrition-table th,
-.nutrition-table td {
-  padding: 14px 16px;
+.product-detail-container.prd-root .prd-nutrition th,
+.product-detail-container.prd-root .prd-nutrition td {
+  padding: 12px 16px;
   text-align: center;
-  border-bottom: 1px solid #eee;
+  font-weight: 700;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid rgba(15,23,42,0.04);
 }
 
-.nutrition-table th {
-  background-color: #f6f6f6;
+.product-detail-container.prd-root .prd-nutrition td {
   font-weight: 600;
 }
 
-.action-wrapper {
+/* Actions — big, premium buttons */
+.product-detail-container.prd-root .prd-actions {
+  margin-top: 6px;
   display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* action-wrapper is used by JS — style under prd-root scope */
+.product-detail-container.prd-root .action-wrapper {
+  display: inline-flex;
   gap: 12px;
   align-items: center;
 }
 
-button.btn-add,
-button.btn-increase,
-button.btn-decrease {
-  padding: 12px 24px;
+/* unified base for buttons */
+.product-detail-container.prd-root .btn-add,
+.product-detail-container.prd-root .btn-increase,
+.product-detail-container.prd-root .btn-decrease {
+  padding: 12px 22px;
   font-size: 16px;
   border: none;
-  border-radius: 50px;
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 800;
   color: white;
-  background: linear-gradient(to right, #f6911d, #d47713);
-  transition: all 0.3s ease;
+  background: linear-gradient(90deg, var(--prd-accent1) 0%, var(--prd-accent2) 100%);
+  box-shadow: 0 10px 30px rgba(214,119,19,0.18);
+  transition: transform .14s ease, box-shadow .14s ease;
+  min-width: 56px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button.btn-add:hover,
-button.btn-increase:hover,
-button.btn-decrease:hover {
-  transform: scale(1.05);
+/* Hover: только для +/- кнопок оставляем эффект (исправлено) */
+.product-detail-container.prd-root .btn-increase:hover,
+.product-detail-container.prd-root .btn-decrease:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(214,119,19,0.18);
 }
 
-.detail-quantity {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0 8px;
-  min-width: 24px;
+/* Убираем hover-трансформацию для кнопки "Добавить" — она остаётся кликабельной, но без визуального сдвига */
+.product-detail-container.prd-root .btn-add:hover {
+  transform: none;
+  /* можно снизить интенсивность тени при наведении — тут оставляем ту же, что и в базовом состоянии */
+  box-shadow: 0 10px 30px rgba(214,119,19,0.18);
+}
+
+/* active states (немного отзывчивее) */
+.product-detail-container.prd-root .btn-add:active,
+.product-detail-container.prd-root .btn-increase:active,
+.product-detail-container.prd-root .btn-decrease:active {
+  transform: translateY(0);
+}
+
+/* quantity display between +/- */
+.product-detail-container.prd-root .detail-quantity {
+  min-width: 42px;
   text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  color: #111827;
+  padding: 4px 8px;
+  background: linear-gradient(180deg,#fff,#f8fafc);
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(15,23,42,0.04);
 }
 
-
-.action-wrapper { align-items: center; }
-
-.btn-edit,
-.btn-delete {
-display: inline-flex;
-gap: 10px;
-align-items: center;
-padding: 10px 16px;
-font-size: 15px;
-font-weight: 700;
-border-radius: 12px;
-border: none;
-cursor: pointer;
-text-decoration: none;
-color: #fff;
-transition: transform .14s ease, box-shadow .14s ease;
-box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+/* admin buttons row (edit/delete) */
+.product-detail-container.prd-root .prd-admin {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.btn-edit {
-background: linear-gradient(90deg, #4f9ef5 0%, #3673d9 100%);
+/* keep original class names for edit/delete but style scoped */
+.product-detail-container.prd-root .btn-edit,
+.product-detail-container.prd-root .btn-delete {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  transition: transform .14s ease, box-shadow .14s ease;
+  box-shadow: 0 10px 26px rgba(2,6,23,0.08);
+  border: none;
 }
 
-.btn-edit svg, .btn-delete svg { width: 16px; height: 16px; opacity: 0.95; }
-
-.btn-edit:focus, .btn-delete:focus {
-outline: 3px solid rgba(70,130,180,0.18);
-outline-offset: 3px;
+.product-detail-container.prd-root .btn-edit {
+  background: linear-gradient(90deg, #4f9ef5 0%, #3673d9 100%);
 }
 
-.btn-delete {
-background: linear-gradient(90deg, #ff6b6b 0%, #e04444 100%);
+.product-detail-container.prd-root .btn-delete {
+  background: linear-gradient(90deg, #ff6b6b 0%, #e04444 100%);
 }
 
-.btn-edit:hover, .btn-delete:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+.product-detail-container.prd-root .btn-edit svg,
+.product-detail-container.prd-root .btn-delete svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.95;
+}
 
-/* Маленькая версия для мобилки */
+.product-detail-container.prd-root .delete-form { margin: 0; }
+
+/* responsive */
+@media (max-width: 980px) {
+  .product-detail-container.prd-root {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .product-detail-container.prd-root .prd-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-detail-container.prd-root .prd-price { align-self: center; }
+}
+
 @media (max-width: 640px) {
-.action-wrapper { gap: 8px; flex-wrap: wrap; }
-.btn-edit, .btn-delete { padding: 8px 12px; font-size: 14px; }
-}
+  .product-detail-container.prd-root {
+    margin: 28px 16px;
+    padding: 14px;
+    border-radius: 14px;
+  }
 
-/* Акцент на рискованное действие: добавить дополнительную подсказку */
-.delete-form { display: inline-block; margin: 0; }
+  .product-detail-container.prd-root .btn-add,
+  .product-detail-container.prd-root .btn-increase,
+  .product-detail-container.prd-root .btn-decrease {
+    padding: 10px 14px;
+    min-width: 48px;
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .product-detail-container.prd-root .detail-quantity { min-width: 36px; font-size: 16px; }
+}
