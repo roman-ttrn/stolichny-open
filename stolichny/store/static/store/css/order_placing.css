@@ -420,3 +420,84 @@ label > .pickup-input:checked::after {
   box-shadow: 0 0 0 3px rgba(246, 145, 29, 0.25);
   transform: scale(1.01);
 }
+
+/* === Стили для numeric / дополнительных полей (сделать как text inputs) === */
+
+/* Общая стилизация для числовых и специальных input'ов */
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+input[name="change_from"],
+#change_from_input,
+.change-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+  transition: border 0.2s, box-shadow 0.15s;
+  -moz-appearance: textfield; /* убрать стрелки в FF, если нужно */
+}
+
+/* Убираем стрелки в Chrome/Safari у number (чтобы выглядело как text) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Фокус как у текстовых полей */
+input[type="number"]:focus,
+input[name="change_from"]:focus,
+#change_from_input:focus,
+.change-input:focus {
+  outline: none;
+  border-color: #e38929;
+  box-shadow: 0 0 0 3px rgba(246,145,29,0.08);
+}
+
+/* Внешний вид для отключённых/readonly полей — совпадает с .readonly */
+input[readonly],
+input[disabled],
+.readonly {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+  border-color: #e9e9e9;
+}
+
+/* Placeholder — общий стиль; если нужен красный плейсхолдер, используй .red-placeholder на input */
+input::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+/* Мобильная подсказка цифровой клавиатуры для text-поля */
+input[type="text"][inputmode="numeric"],
+input.change-input[inputmode="numeric"],
+#change_from_input[inputmode="numeric"] {
+  ime-mode: numeric;
+}
+
+/* Responsive — соответствующие паддинги для маленьких экранов */
+@media (max-width: 768px) {
+  input[type="number"],
+  input[name="change_from"],
+  #change_from_input,
+  .change-input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  input[type="number"],
+  input[name="change_from"],
+  #change_from_input,
+  .change-input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}

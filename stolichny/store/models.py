@@ -73,6 +73,7 @@ class Order(models.Model):
         null=True,
         max_length=500
     )
+    change_from = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Заказ от {self.user.username} — {self.status}"

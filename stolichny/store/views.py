@@ -411,7 +411,6 @@ def order_sending(request):
     if request.user.is_authenticated:
 
         if request.method == 'POST':
-            print(request.session.get('cart', {}))
             if not is_within_working_hours():
                 messages.error(request, 'Заказы можно оформлять только в рабочее время:\nПн–Чт: 8:00–22:00, Пт–Вс: 9:00–23:00.')
                 return redirect('checkout')
@@ -431,6 +430,7 @@ def order_sending(request):
             cart = request.session.get('cart', {})
             payment_method = request.POST.get('payment_method')
             pickup = 'pickup' in request.POST
+            change_from = request.POST.get('change_from') if request.POST.get('change_from') else 0
 
             if not cart:
                 return redirect('cart')  # если корзина пуста
@@ -445,6 +445,7 @@ def order_sending(request):
             delivery_fee=delivery_fee,
             pickup=pickup,
             to_door= to_door,
+            change_from = change_from
             )   
 
             order_price = 0

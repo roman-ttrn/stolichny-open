@@ -81,6 +81,16 @@
             <input type="checkbox" id="door_delivery" name="door_delivery" class="pickup-input">
             <label for="door_delivery">Доставим до двери, но +50 ₽</label>
               </div>
+
+        <br></br>
+        <div class="form-group">
+          <label for="change_from_input">Сдача с:</label>
+
+        <input type="number" id="change_from_input" min="0" step="1" placeholder="Заплачу без сдачи" value="" />
+        <input type="hidden" id="change_from_hidden" name="change_from" value="" />
+        </div>
+        <!-- /NEW -->
+
         </div>
 
       <!-- Предупреждение -->
@@ -118,5 +128,78 @@
     </form>
   </div>
 </div>
+
+<!-- NEW: Скрипт управления полем "Сдача с" -->
+<script>
+(function() {
+  const pickupCheckbox = document.getElementById('pickup');
+  const paymentRadios = document.getElementsByName('payment_method');
+  const changeInput = document.getElementById('change_from_input');
+  const changeHidden = document.getElementById('change_from_hidden');
+
+  if (!changeInput || !changeHidden) return;
+
+  // Устанавливает состояние поля: включено только при оплате наличными и если не выбран "заберу сам"
+  function updateChangeField() {
+    const isPickup = pickupCheckbox && pickupCheckbox.checked;
+    let selectedPayment = null;
+    for (const r of paymentRadios) {
+      if (r.checked) { selectedPayment = r.value; break; }
+    }
+
+    const shouldEnable = (selectedPayment === 'cash') && !isPickup;
+
+    if (shouldEnable) {
+      // включаем поле для ввода
+      changeInput.removeAttribute('disabled');
+      // если ранее было пусто — поставим нейтральный плейсхолдер
+      if (!changeInput.value) {
+        changeInput.placeholder = 'Заплачу без сдачи';
+      }
+      // синхронизируем скрытое поле (может быть пустым)
+      changeHidden.value = changeInput.value || '';
+    } else {
+      // отключаем и сбрасываем значение — делаем пустым и ставим плейсхолдер "Заплачу без сдачи"
+      changeInput.value = '';
+      changeInput.setAttribute('disabled', 'disabled');
+      changeInput.placeholder = 'Заплачу без сдачи';
+      // скрытое поле содержит пустую строку — сервер получит пустое значение
+      changeHidden.value = '';
+    }
+  }
+
+  // копируем значение в скрытое поле при вводе
+  changeInput.addEventListener('input', function() {
+    // если пользователь ввёл число — сохраняем; если поле пустое — отправим пустую строку
+    changeHidden.value = changeInput.value !== null ? changeInput.value : '';
+  });
+
+  // слушаем изменение оплаты
+  for (const r of paymentRadios) {
+    r.addEventListener('change', updateChangeField);
+  }
+
+  // слушаем чекбокс "заберу сам"
+  if (pickupCheckbox) {
+    pickupCheckbox.addEventListener('change', updateChangeField);
+  }
+
+  // Инициализация состояния (вызов в конце — на случай, если скрипт загружен после DOMContentLoaded)
+  document.addEventListener('DOMContentLoaded', updateChangeField);
+  updateChangeField();
+})();
+
+const changeInput = document.getElementById('change_from_input');
+const changeHidden = document.getElementById('change_from_hidden');
+
+changeInput.addEventListener('input', () => {
+  // Оставляем только цифры, максимум 5 символов
+  let v = String(changeInput.value).replace(/\D/g, '').slice(0, 5);
+  changeInput.value = v;
+  changeHidden.value = v;
+});
+
+</script>
+<!-- /NEW -->
 
 <script src="{% static 'store/js/order_placing1.js' %}"></script>
