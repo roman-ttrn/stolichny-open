@@ -59,7 +59,6 @@
         </ul>
       </div>
 
-      <!-- Способ оплаты -->
         <div class="checkout-section">
         <h2 class="section-title">Как будете оплачивать?</h2>
         <div class="payment-options">
@@ -89,7 +88,6 @@
         <input type="number" id="change_from_input" min="0" step="1" placeholder="Заплачу без сдачи" value="" />
         <input type="hidden" id="change_from_hidden" name="change_from" value="" />
         </div>
-        <!-- /NEW -->
 
         </div>
 
@@ -129,7 +127,6 @@
   </div>
 </div>
 
-<!-- NEW: Скрипт управления полем "Сдача с" -->
 <script>
 (function() {
   const pickupCheckbox = document.getElementById('pickup');
@@ -150,41 +147,41 @@
     const shouldEnable = (selectedPayment === 'cash') && !isPickup;
 
     if (shouldEnable) {
-      // включаем поле для ввода
+
       changeInput.removeAttribute('disabled');
-      // если ранее было пусто — поставим нейтральный плейсхолдер
+
       if (!changeInput.value) {
         changeInput.placeholder = 'Заплачу без сдачи';
       }
-      // синхронизируем скрытое поле (может быть пустым)
+
       changeHidden.value = changeInput.value || '';
     } else {
-      // отключаем и сбрасываем значение — делаем пустым и ставим плейсхолдер "Заплачу без сдачи"
+
       changeInput.value = '';
       changeInput.setAttribute('disabled', 'disabled');
       changeInput.placeholder = 'Заплачу без сдачи';
-      // скрытое поле содержит пустую строку — сервер получит пустое значение
+
       changeHidden.value = '';
     }
   }
 
-  // копируем значение в скрытое поле при вводе
+
   changeInput.addEventListener('input', function() {
-    // если пользователь ввёл число — сохраняем; если поле пустое — отправим пустую строку
+
     changeHidden.value = changeInput.value !== null ? changeInput.value : '';
   });
 
-  // слушаем изменение оплаты
+
   for (const r of paymentRadios) {
     r.addEventListener('change', updateChangeField);
   }
 
-  // слушаем чекбокс "заберу сам"
+
   if (pickupCheckbox) {
     pickupCheckbox.addEventListener('change', updateChangeField);
   }
 
-  // Инициализация состояния (вызов в конце — на случай, если скрипт загружен после DOMContentLoaded)
+
   document.addEventListener('DOMContentLoaded', updateChangeField);
   updateChangeField();
 })();
@@ -200,6 +197,5 @@ changeInput.addEventListener('input', () => {
 });
 
 </script>
-<!-- /NEW -->
 
 <script src="{% static 'store/js/order_placing1.js' %}"></script>

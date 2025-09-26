@@ -33,13 +33,13 @@
     }
 
     /* Цвета статусов */
-    .status-new { color: #3498db; } /* Новый */
-    .status-processing { color: #2ecc71; } /* В обработке - зеленый */
-    .status-setting-up { color: #e67e22; } /* Собираем - оранжевый */
-    .status-shipped { color: #3498db; } /* В пути - синий */
-    .status-completed { color: #27ae60; } /* Доставлен */
-    .status-cancelled { color: #e74c3c; } /* Отменен */
-    .status-inactive { color: #e74c3c; } /* Неактивен */
+    .status-new { color: #3498db; }
+    .status-processing { color: #2ecc71; }
+    .status-setting-up { color: #e67e22; }
+    .status-shipped { color: #3498db; }
+    .status-completed { color: #27ae60; }
+    .status-cancelled { color: #e74c3c; }
+    .status-inactive { color: #e74c3c; }
 
     /* Форма */
     .order-card form {
@@ -74,30 +74,13 @@
     }
 
     /* Состояния заказа (цвета левой границы) */
-
-    .order-card[data-status="processing"] {
-    border-left-color: #2ecc71;
-    }
-    .order-card[data-status="setting up"] {
-    border-left-color:rgb(228, 149, 79);
-    }
-    .order-card[data-status="shipped"] {
-    border-left-color: #3498db;
-    }
-    .order-card[data-status="completed"] {
-    border-left-color: #27ae60;
-    }
-    .order-card[data-status="canceled"] {
-    border-left-color: #e74c3c;
-    }
-
-    .order-card[data-status="inactive"] {
-    border-left-color: #e74c3c;
-    }
-
-    .order-card[data-status="delivered"] {
-    border-left-color:rgb(209, 209, 209);
-    }
+    .order-card[data-status="processing"] { border-left-color: #2ecc71; }
+    .order-card[data-status="setting up"] { border-left-color:rgb(228, 149, 79); }
+    .order-card[data-status="shipped"] { border-left-color: #3498db; }
+    .order-card[data-status="completed"] { border-left-color: #27ae60; }
+    .order-card[data-status="canceled"] { border-left-color: #e74c3c; }
+    .order-card[data-status="inactive"] { border-left-color: #e74c3c; }
+    .order-card[data-status="delivered"] { border-left-color:rgb(209, 209, 209); }
 
     /* Стили для товаров */
     .order-products {
@@ -121,6 +104,7 @@
     .product-item:last-child {
     border-bottom: none;
     }
+
     .show-inactive-btn {
     position: fixed;
     top: 20px;
@@ -141,6 +125,28 @@
     background-color: #c0392b;
     }
 
+    /* NEW: Кнопка в левом верхнем углу */
+    .left-top-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color:rgb(229, 130, 64);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .left-top-btn:hover {
+    background-color:rgb(207, 113, 41);
+    }
+
     .page-header {
     text-align: center;
     margin: 20px 0 30px;
@@ -155,6 +161,9 @@
     padding: 0;
     }
 </style>
+
+<!-- NEW: Кнопка в левом верхнем углу -->
+<a href="{% url 'profile' %}" class="left-top-btn">В магазин</a>
 
 {% if show_inactive %}
   <a href={% url "admin_dashboard" %} class="show-inactive-btn" style="background-color: #3498db;" data-show-inactive="false">Активные заказы</a>
@@ -175,7 +184,6 @@
 <div id="order-container">
     {% include "adm1nka/includes/order_card.html" %}
 </div>
-
 
 <script>
 
