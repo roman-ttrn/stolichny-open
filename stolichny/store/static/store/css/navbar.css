@@ -555,3 +555,18 @@ header {
   flex-direction: column;
   height: 100%;
 }
+
+.suggestions-list {
+  max-height: 60vh;       /* ограничиваем высоту подсказок */
+  overflow-y: auto;       /* включаем прокрутку */
+  overscroll-behavior: contain; /* чтобы скролл не двигал страницу */
+}
+
+/* Чтобы на мобилке прокрутка точно работала */
+@media (max-width: 768px) {
+  .suggestions-list {
+    max-height: 70vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* плавный мобильный скролл */
+  }
+}
