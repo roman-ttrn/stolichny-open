@@ -8,7 +8,7 @@ load_dotenv()
 
 from .base import *
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
     "stolichny.intellectum49.ru",
 ]
