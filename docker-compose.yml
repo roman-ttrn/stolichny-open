@@ -71,7 +71,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx-main.conf:/etc/nginx/nginx.conf:ro   # 👉 глобальный конфиг
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro  # 👉 серверный блок
       - media_volume:/vol/web/media:ro
       - staticfiles:/vol/web/static
