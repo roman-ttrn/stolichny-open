@@ -41,19 +41,13 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
 
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',  # драйвер для PostgreSQL
-#        'NAME': os.getenv('POSTGRES_DB'),           # имя базы данных
-#        'USER': os.getenv('POSTGRES_USER'),         # пользователь PostgreSQL
-#        'PASSWORD': os.getenv('POSTGRES_PASSWORD'), # пароль пользователя
-#        'HOST': os.getenv('POSTGRES_HOST', 'db'),   # хост (в docker-compose это имя сервиса)
-#        'PORT': os.getenv('POSTGRES_PORT', '5432'), # порт PostgreSQL
-#    }
-#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # драйвер для PostgreSQL
+        'NAME': os.getenv('POSTGRES_DB'),           # имя базы данных
+        'USER': os.getenv('POSTGRES_USER'),         # пользователь PostgreSQL
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'), # пароль пользователя
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),   # хост (в docker-compose это имя сервиса)
+        'PORT': os.getenv('POSTGRES_PORT', '5432'), # порт PostgreSQL
     }
 }
