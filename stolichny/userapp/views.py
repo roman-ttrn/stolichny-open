@@ -94,12 +94,9 @@ def login_email(request):
                 return render(request, 'userapp/login_email.html')
 
             code_entry.save()
-            print('код')
             send_email_verification_code(email, code)
-            print('отправлен')
             request.session['reg_data'] = {'email': email}
             request.session['email'] = email
-            print('redirect')
             return redirect('login_email_verify', email=email)
 
         except User.DoesNotExist:
@@ -135,7 +132,7 @@ def login_email_verify(request, email):
             code_entry.attempts += 1
             code_entry.save()
 
-            if code_entry.attempts > 5:
+            if code_entry.attempts > 5: #!!!!!
                 code_entry.block()
                 messages.error(request, 'Слишком много попыток. Повторите позже.')
                 return redirect('login_email')
@@ -143,14 +140,14 @@ def login_email_verify(request, email):
             messages.error(request, 'Неверный код подтверждения.')
             return redirect('login_email_verify', email=email)
 
-        # Код верен
+        
         code_entry.verified = True
         code_entry.save()
 
         user = User.objects.get(email=email)
         login(request, user)
 
-        # очищаем старые коды (по желанию — можно удалять вручную)
+
         EmailVerificationCode.objects.filter(email=email).delete()
 
         messages.success(request, 'Вы успешно вошли в аккаунт.')

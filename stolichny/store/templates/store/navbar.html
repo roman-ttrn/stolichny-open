@@ -82,14 +82,17 @@
               <img src="{% static 'store/images/delivery2.png' %}" alt="Доставка"><span>Заказы</span>
             </a>
           {% endif %}
-        <a href="/categories/" class="nav-button">
-          <img src="{% static 'store/images/category.png' %}" alt="Категории"><span>Категории</span>
-        </a>
 
           <a href="/promo/" class="nav-button">
             <img src="{% static 'store/images/promocode.png' %}" alt="Промокоды"><span>Промокоды</span>
           </a>
         {% endif %}
+
+        <a href="/categories/" class="nav-button">
+          <img src="{% static 'store/images/category.png' %}" alt="Категории"><span>Категории</span>
+        </a>
+
+
 
         {% if request.user.is_authenticated %}
           <a href="/support/" class="nav-button">

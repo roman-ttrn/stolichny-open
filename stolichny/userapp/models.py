@@ -18,17 +18,19 @@ class EmailVerificationCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     verified = models.BooleanField(default=False)
 
-    attempts = models.IntegerField(default=0)  # Попытки ввода кода
-    resend_attempts = models.IntegerField(default=0)  # Попытки отправки нового кода
+    attempts = models.IntegerField(default=0) 
+    resend_attempts = models.IntegerField(default=0) 
 
-    is_blocked_until = models.DateTimeField(null=True, blank=True)  # Блокировка
+    is_blocked_until = models.DateTimeField(null=True, blank=True)
 
     def is_expired(self):
         return timezone.now() > self.created_at + timedelta(minutes=10)
 
-    def is_blocked(self):
+    def is_blocked(self): #!!!!!
         return self.is_blocked_until and self.is_blocked_until > timezone.now()
 
     def block(self, duration=timedelta(minutes=5)):
         self.is_blocked_until = timezone.now() + duration
-        self.save()
+        self.save()#!!!!
+
+
