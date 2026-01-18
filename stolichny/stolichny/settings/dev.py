@@ -1,4 +1,4 @@
-print("🚀 LOADED DEV SETTINGS FILE")
+
 from dotenv import load_dotenv
 load_dotenv()
 from .base import *

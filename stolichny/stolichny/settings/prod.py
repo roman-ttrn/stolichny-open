@@ -1,4 +1,4 @@
-print("🔥 LOADED PROD SETTINGS FILE")
+
 
 import os
 from pathlib import Path

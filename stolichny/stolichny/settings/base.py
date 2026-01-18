@@ -1,4 +1,4 @@
-print("⚙️  LOADED BASE SETTINGS FILE")
+
 """
 Django settings for stolichny project.
 
