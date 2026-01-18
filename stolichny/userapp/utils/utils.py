@@ -3,7 +3,6 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 import uuid
 
-import dns.resolver
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
@@ -15,14 +14,6 @@ def validate_email_format(email: str) -> bool:
     except ValidationError:
         return False
 
-def is_real_domain(email: str) -> bool:
-    """Проверяет MX-записи домена."""
-    domain = email.split('@')[-1]
-    try:
-        dns.resolver.resolve(domain, 'MX')
-        return True
-    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
-        return False
 
 def generate_verification_code():
     return randint(100000, 999999)

@@ -31,7 +31,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     categories = models.ManyToManyField(Category, related_name='products', blank=True)
-    image = models.ImageField(upload_to='products/', blank=True)
+    image = models.ImageField(upload_to='products/', blank=True, default='default.png')
     protein = models.PositiveIntegerField(blank=True, null=True)
     fat = models.PositiveIntegerField(blank=True, null=True)
     carbs = models.PositiveIntegerField(blank=True, null=True)

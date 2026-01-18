@@ -17,7 +17,11 @@
 }
 
 .product-card {
-  background: #f4f4f4;
+  background: linear-gradient(
+  120deg,
+  #f7f7f7,
+  #e7e7e7
+);
   border-radius: 20px;
   padding: 14px;
   width: 200px;
@@ -26,6 +30,7 @@
   flex-direction: column;
   gap: 1px;
 }
+
 
 .product-card img {
   width: 100%;
