@@ -9,7 +9,14 @@ load_dotenv()
 from .base import *
 
 DEBUG = True
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = [
+    "stolichny.intellectum49.ru",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://stolichny.intellectum49.ru",
+]
+
 
 SECURE_HSTS_SECONDS = 31536000  # 1 год
 SECURE_HSTS_PRELOAD = True
@@ -32,10 +39,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://stolichny.intellectum49.ru",
-]
 
 
 DATABASES = {
