@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: postgres:15.6
+    image: postgres:18.3-alpine
     restart: always
     user: "999:999"
     volumes:
@@ -61,7 +61,7 @@ services:
           memory: 512M
 
   nginx:
-    image: nginx:1.25.3
+    image: nginx:1.25.3-alpine
     restart: always
     tmpfs:
       - /tmp
