@@ -41,9 +41,8 @@ def login_view(request):
         except User.DoesNotExist:
             user = None
 
-        # Сначала аутентификация, потом проверка прав
         auth_user = authenticate(request, username=user.username, password=password)
-        if auth_user is not None:  # Явная проверка на None
+        if auth_user is not None: 
             if not auth_user.is_superuser:
                 LoginAttempt.objects.create(ip=ip)
                 return redirect('/')
@@ -110,7 +109,7 @@ def update_order_status(request, order_id):
 
     order.save()
 
-    user = order.user  # или конкретный пользователь
+    user = order.user 
     has_active_orders = Order.objects.filter(
         user=user
     ).exclude(
@@ -157,26 +156,16 @@ def product_create_or_edit(request, product_id=None):
         product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
-        # ВАЖНО: если product существует — передаём instance=product
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
-            # безопасное сохранение: сначала commit=False чтобы можно было управлять полями
             obj = form.save(commit=False)
 
-            # --- сохранение картинки: если редактирование и пользователь НЕ загрузил новую картинку
-            # и не поставил чекбокс очистки, то оставляем старую картинку
             if product is not None:
-                # form.cleaned_data['image'] будет:
-                # - File объект при загрузке нового файла
-                # - False/None если чекбокс 'очистить' установлен (ClearableFileInput)
-                # - None если ничего не трогали — тогда нужно сохранить старую
                 new_image = form.cleaned_data.get('image')
                 clear_flag = f"{form.add_prefix('image')}-clear" in request.POST
-                # если нет нового файла и флага очистки — сохраняем старую картинку
                 if not new_image and not clear_flag:
                     obj.image = product.image
             
-            # любые дополнительные поля (владелец и т.д.) можно установить здесь
             obj.save()
             form.save_m2m()
 
@@ -185,12 +174,11 @@ def product_create_or_edit(request, product_id=None):
         else:
             messages.error(request, 'Форма содержит ошибки, исправьте их.')
     else:
-        # GET: instance достаточно
         form = ProductForm(instance=product)
 
     return render(request, 'adm1nka/product_form.html', {
         'form': form,
-        'product': product,   # передаём сам объект (или None) — удобно в шаблоне
+        'product': product,  
     })
 
 

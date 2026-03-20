@@ -242,7 +242,6 @@ def signup_email_verification(request):
         code_entry.verified = True
         code_entry.save()
 
-        # Получаем user данные через форму (в реальном проде лучше использовать промежуточную модель)
         form = RegistrationForm(request.session.get('reg_data') or {})  # если ты решишь сохранять reg_data как словарь в сессии
 
         if not form.is_valid():
@@ -308,5 +307,3 @@ def resend_code(request):
     print('success')
     return JsonResponse({'success': True})
 
-
-#verify_user_id in sign up and Profile editing address problem!

@@ -15,10 +15,10 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
     name = models.CharField(max_length=50)
     parent = models.ForeignKey(
-        'self',                  # Ссылка на эту же модель (чтобы делать вложенность)
+        'self',                  
         blank=True,
         null=True,
-        related_name='children',  # Как обращаться к подкатегориям
+        related_name='children',  
         on_delete=models.CASCADE,
     )
 
@@ -141,3 +141,15 @@ class LoginAttempt(models.Model):
 
     def __str__(self):
         return f"{self.ip} — {self.timestamp}"
+
+class AiChatMessages(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    human = models.BooleanField(default=True)
+    time = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        if self.human:
+            return f'Сообщение пользователя: {self.message}'
+        else:
+            return f'Сообщение от AI: {self.message}'

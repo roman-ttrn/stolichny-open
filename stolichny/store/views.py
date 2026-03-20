@@ -16,6 +16,12 @@ from django.db.models import F
 from .models import *
 from userapp.utils.utils import *
 
+import json
+import requests
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from groq import Groq
+
 load_dotenv()
 
 from decimal import Decimal
@@ -230,7 +236,6 @@ def add_to_cart(request):
 
         cart = request.session.get('cart', {})
         
-        # Получаем продукт (можно оптимизировать bulk-запросом, если нужно несколько товаров)
         product = Product.objects.get(id=product_id)
 
         # Инициализация записи товара в корзине
@@ -264,7 +269,7 @@ def add_to_cart(request):
         return JsonResponse({
             'cart_item_count': total_items,
             'new_quantity': new_quantity,
-            'price': str(total_price),  # Decimal -> str для JSON
+            'price': str(total_price), 
             'product_id': product_id,
             'discount_percent': discount_percent,
             'discount_price': discount_price
@@ -276,7 +281,6 @@ def remove_from_cart(request):
         cart = request.session.get('cart', {})
 
         try:
-            # Получаем продукт (можно убрать, если используем только product_dict)
             product = Product.objects.get(id=product_id)
 
             if product_id in cart:
@@ -336,7 +340,6 @@ def search_products(request):
         if not query:
             return JsonResponse({'result': []})
 
-        # Фильтруем по названию (регистр не важен), ограничиваем 10ю результатами
         matched_products = Product.objects.filter(name__iregex=rf'{query}')[:10] # дружит с русскими буквами на основе регулярок 
 
         result = [{'id': p.id, 'name': p.name} for p in matched_products]
@@ -361,9 +364,9 @@ def order_placing(request):
                 if promo_codes.exists():
                     discount_percent = sum(promo.discount_percent for promo in promo_codes)
                     discount_price = total * (Decimal('1.00') - Decimal(discount_percent) / Decimal('100'))
-                    discount_price = discount_price.quantize(Decimal('0.01'))  # округление до копеек
+                    discount_price = discount_price.quantize(Decimal('0.01')) 
 
-                total = total.quantize(Decimal('0.01'))  # округление до копеек
+                total = total.quantize(Decimal('0.01')) 
                 return render(request, 'store/order_placing.html', {
                     'cart_items': cart_items,
                     'total': total,
@@ -573,7 +576,7 @@ def user_story_response(req):
 def save_story_reaction(request):
     try:
         if request.method == 'POST':
-            story_image = request.POST.get('image_src')  # пусть будет ключом
+            story_image = request.POST.get('image_src') 
             reaction = request.POST.get('reaction')
 
             if story_image and reaction:
@@ -647,3 +650,55 @@ def promo(req):
         return redirect('/')
     return render(req, 'store/promo.html')
  
+
+def ai(req):
+    if req.method == 'POST':
+        data = json.loads(req.body)
+        user_message = data['message']
+
+        client = Groq(api_key=settings.GROQ_API_KEY)
+
+        history = AiChatMessages.objects.filter(
+            user=req.user
+        ).order_by('-time')[:20]
+
+        history = list(reversed(history))
+
+        messages = [
+            {
+                "role": "system",
+                "content": "Ты помощник в онлайн-продуктовом магазине. Нельзя общаться на отстраненные темы, только по теме товаров."
+            }
+        ]
+
+        for msg in history:
+            messages.append({
+                "role": "user" if msg.human else "assistant",
+                "content": msg.message
+            })
+
+        messages.append({
+            "role": "user",
+            "content": user_message
+        })
+
+        chat_completion = client.chat.completions.create(
+            messages=messages,
+            model="llama-3.3-70b-versatile",
+        )
+
+        ai_answer = chat_completion.choices[0].message.content
+
+        AiChatMessages.objects.create(message=user_message, human=True, user=req.user)
+        AiChatMessages.objects.create(message=ai_answer, human=False, user=req.user)
+
+        return JsonResponse({"response": ai_answer})
+
+    else:
+        history = AiChatMessages.objects.filter(
+            user=req.user
+        ).order_by('-time')[:20]
+
+        history = list(reversed(history))
+
+        return render(req, 'store/ai.html', {'history': history})
